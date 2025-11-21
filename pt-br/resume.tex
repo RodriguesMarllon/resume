@@ -1,38 +1,38 @@
 \documentclass[10pt, letterpaper]{article}
 
-% Pacotes:
+% Packages:
 \usepackage[
-    ignoreheadfoot, % define margens sem considerar cabeçalho e rodapé
-    top=1 cm, % separação entre o corpo e a borda superior da página
-    bottom=1 cm, % separação entre o corpo e a borda inferior da página
-    left=1 cm, % separação entre o corpo e a borda esquerda da página
-    right=1 cm, % separação entre o corpo e a borda direita da página
-    footskip=1 cm, % separação entre o corpo e o rodapé
-    % showframe % para depuração
-]{geometry} % para ajustar a geometria da página
-\usepackage{titlesec} % para personalizar títulos de seções
-\usepackage[dvipsnames]{xcolor} % para colorir texto
-\definecolor{primaryColor}{RGB}{0, 0, 0} % define a cor primária
-\usepackage{enumitem} % para personalizar listas
-\usepackage{etoolbox} % para declarações condicionais
-\usepackage{amsmath} % para matemática
+	ignoreheadfoot, % set margins without considering header and footer
+	top=1 cm, % seperation between body and page edge from the top
+	bottom=1 cm, % seperation between body and page edge from the bottom
+	left=1 cm, % seperation between body and page edge from the left
+	right=1 cm, % seperation between body and page edge from the right
+	footskip=1 cm, % seperation between body and footer
+	% showframe % for debugging
+]{geometry} % for adjusting page geometry
+\usepackage{titlesec} % for customizing section titles
+\usepackage[dvipsnames]{xcolor} % for coloring text
+\definecolor{primaryColor}{RGB}{0, 0, 0} % define primary color
+\usepackage{enumitem} % for customizing lists
+\usepackage{etoolbox} % for conditional statements
+\usepackage{amsmath} % for math
 \usepackage[
-    pdftitle={Curriculo de Victor Micco},
-    pdfauthor={Victor Micco},
-    pdfcreator={Victor Micco},
-    colorlinks=true,
-    urlcolor=primaryColor
-]{hyperref} % para links, metadados e marcadores
-\usepackage[pscoord]{eso-pic} % para texto flutuante na página
-\usepackage{calc} % para calcular comprimentos
-\usepackage{bookmark} % para marcadores
-\usepackage{lastpage} % para obter o número total de páginas
-\usepackage{changepage} % para entradas de uma coluna (ambiente adjustwidth)
-\usepackage{paracol} % para entradas de duas e três colunas
-\usepackage{needspace} % para evitar quebra de página logo após o título da seção
-\usepackage{iftex} % verifica se o motor é pdflatex, xetex ou luatex
+	pdftitle={Curriculo de Marllon Rodrigues},
+	pdfauthor={Marllon Rodrigues},
+	pdfcreator={Marllon Rodrigues},
+	colorlinks=true,
+	urlcolor=primaryColor
+]{hyperref} % for links, metadata and bookmarks
+\usepackage[pscoord]{eso-pic} % for floating text on the page
+\usepackage{calc} % for calculating lengths
+\usepackage{bookmark} % for bookmarks
+\usepackage{lastpage} % for getting the total number of pages
+\usepackage{changepage} % for one column entries (adjustwidth environment)
+\usepackage{paracol} % for two and three column entries
+\usepackage{needspace} % for avoiding page brake right after the section title
+\usepackage{iftex} % check if engine is pdflatex, xetex or luatex
 
-% Garantir que o PDF gerado seja legível por máquinas/ATS:
+% Ensure that generate pdf is machine readable/ATS parsable:
 \ifPDFTeX
 \input{glyphtounicode}
 \pdfgentounicode=1
@@ -43,186 +43,205 @@
 
 \usepackage{charter}
 
-% Algumas configurações:
+% Some settings:
 \raggedright
-\AtBeginEnvironment{adjustwidth}{\partopsep0pt} % remove espaço antes do ambiente adjustwidth
-\pagestyle{empty} % sem cabeçalho ou rodapé
-\setcounter{secnumdepth}{0} % sem numeração de seções
-\setlength{\parindent}{0pt} % sem indentação
-\setlength{\topskip}{0pt} % sem espaço no topo
-\setlength{\columnsep}{0.15cm} % define separação entre colunas
-\pagenumbering{gobble} % sem numeração de páginas
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt} % remove space before adjustwidth environment
+\pagestyle{empty} % no header or footer
+\setcounter{secnumdepth}{0} % no section numbering
+\setlength{\parindent}{0pt} % no indentation
+\setlength{\topskip}{0pt} % no top skip
+\setlength{\columnsep}{0.15cm} % set column seperation
+\pagenumbering{gobble} % no page numbering
 
 \titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[
 \vspace{1pt}
 \titlerule]
 
 \titlespacing{\section}{
-% espaço à esquerda:
+% left space:
 -1pt }{
-% espaço acima:
+% top space:
 0.3 cm }{
-% espaço abaixo:
-0.2 cm } % espaçamento do título da seção
+% bottom space:
+0.2 cm } % section title spacing
 
-\renewcommand{\labelitemi}{$\vcenter{\hbox{\small$\bullet$}}$} % pontos personalizados
+\renewcommand{\labelitemi}{$\vcenter{\hbox{\small$\bullet$}}$} % custom bullet points
 \newenvironment{highlights}{ \begin{itemize}[ topsep=0.10 cm, parsep=0.10 cm, partopsep=0pt,
-itemsep=0pt, leftmargin=0 cm + 10pt ] }{ \end{itemize} } % novo ambiente para destaques
+itemsep=0pt, leftmargin=0 cm + 10pt ] }{ \end{itemize} } % new environment for highlights
 
 \newenvironment{highlightsforbulletentries}{ \begin{itemize}[ topsep=0.10 cm,
-parsep=0.10 cm, partopsep=0pt, itemsep=0pt, leftmargin=10pt ] }{ \end{itemize} } % novo ambiente para destaques para entradas com marcadores
+parsep=0.10 cm, partopsep=0pt, itemsep=0pt, leftmargin=10pt ] }{ \end{itemize} } % new environment for highlights for bullet entries
 
 \newenvironment{onecolentry}{ \begin{adjustwidth}{ 0 cm + 0.00001 cm }{ 0 cm + 0.00001 cm }
-}{ \end{adjustwidth} } % novo ambiente para entradas de uma coluna
+}{ \end{adjustwidth} } % new environment for one column entries
 
 \newenvironment{twocolentry}[2][]{ \onecolentry \def\secondColumn{#2} \setcolumnwidth{\fill, 4.5 cm}
 \begin{paracol}{2} }{ \switchcolumn \raggedleft \secondColumn \end{paracol}
-\endonecolentry } % novo ambiente para entradas de duas colunas
+\endonecolentry } % new environment for two column entries
 
-\newenvironment{threecolentry}[3][]{ \onecolentry \def\thirdColumn{#3} \setcolumnwidth{, \fill, 4.5 cm}
+\newenvironment{threecolentry}[3][]{ \onecolentry 
+\def\thirdColumn{#3} \setcolumnwidth{, \fill, 4.5 cm}
 \begin{paracol}{3} {\raggedright #2} \switchcolumn }{ \switchcolumn \raggedleft \thirdColumn
-\end{paracol} \endonecolentry } % novo ambiente para entradas de três colunas
+\end{paracol} \endonecolentry } % new environment for three column entries
 
 \newenvironment{header}{
 \setlength{\topsep}{0pt}
 \par\kern\topsep
 \centering
-\linespread{1.5} }{ \par\kern\topsep } % novo ambiente para o cabeçalho
+\linespread{1.5} }{ \par\kern\topsep } % new environment for the header
 
-\newcommand{\placelastupdatedtext}{% \placetextbox{<posição horizontal>}{<posição vertical>}{<conteúdo>}
-\AddToShipoutPictureFG*{% Adiciona <conteúdo> ao primeiro plano da página atual
-\put( \LenToUnit{\paperwidth-2 cm-0 cm+0.05cm}, \LenToUnit{\paperheight-1.0 cm} ){\vtop{{\null}\makebox[0pt][c]{ \small\color{gray}\textit{Última atualização em setembro de 2024}\hspace{\widthof{Última atualização em setembro de 2024}} }}}%
+\newcommand{\placelastupdatedtext}{% \placetextbox{<horizontal pos>}{<vertical pos>}{<stuff>}
+\AddToShipoutPictureFG*{% Add <stuff> to current page foreground
+\put( \LenToUnit{\paperwidth-2 cm-0 cm+0.05cm}, \LenToUnit{\paperheight-1.0 cm} ){\vtop{{\null}\makebox[0pt][c]{ \small\color{gray}\textit{Última atualização em Novembro de 2025}\hspace{\widthof{Última atualização em Novembro de 2025}} }}}%
 }%
 }%
 
-% salva o comando href original em um novo comando:
+% save the original href command in a new command:
 \let\hrefWithoutArrow\href
 
-% novo comando para links externos:
+% new command for external links:
 
 \begin{document}
-    \newcommand{\AND}{\unskip \cleaders\copy\ANDbox\hskip\wd\ANDbox \ignorespaces }
-    \newsavebox{\ANDbox}
-    \sbox{\ANDbox}{$|$}
+	\newcommand{\AND}{\unskip \cleaders\copy\ANDbox\hskip\wd\ANDbox \ignorespaces }
+	\newsavebox{\ANDbox}
+	\sbox{\ANDbox}{$|$}
 
-    \begin{header}
-        \fontsize{25 pt}{25 pt}\selectfont Victor Micco
+	\begin{header}
+		\fontsize{25 pt}{25 pt}\selectfont Marllon Rodrigues
 
-        \fontsize{18 pt}{18 pt}\selectfont Desenvolvedor Full Stack
+        \fontsize{18 pt}{18 pt}\selectfont Engenheiro de Software \& Automação
 
-        \vspace{5 pt}
+		\vspace{5 pt}
 
-        \normalsize
-        \mbox{\hrefWithoutArrow{mailto:victor.oficial093@gmail.com}{victor.oficial093@gmail.com}}%
-        \kern 5.0 pt%
+		\normalsize
+		\mbox{\hrefWithoutArrow{mailto:marllonrsantos@gmail.com}{marllonrsantos@gmail.com}}%
+		\kern 5.0 pt%
+		\AND%
+		\kern 5.0 pt%
+		\mbox{\hrefWithoutArrow{https://linkedin.com/in/rodriguesmarllon}{linkedin.com/in/rodriguesmarllon}}%
+		\kern 5.0 pt%
         \AND%
-        \kern 5.0 pt%
-        \mbox{\hrefWithoutArrow{https://victormicco.com.br}{victormicco.com.br}}%
-        \kern 5.0 pt%
-        \AND%
-        \kern 5.0 pt%
-        \mbox{\hrefWithoutArrow{https://linkedin.com/in/victormicco}{linkedin.com/in/victormicco}}%
-        \kern 5.0 pt%
-        \AND%
-        \kern 5.0 pt%
-        \mbox{\hrefWithoutArrow{https://github.com/victormicco}{github.com/victormicco}}%
-    \end{header}
+		\kern 5.0 pt%
+		\mbox{\hrefWithoutArrow{https://github.com/rodriguesmarllon}{github.com/rodriguesmarllon}}%
+	\end{header}
 
-    \section{Habilidades}
+	\section{Competências Técnicas}
 
-    Java, JavaScript (ES2015+), TypeScript,
-    SQL, GraphQL, React, Next.js, Vite,
-    Node.js, Tailwind CSS, Styled Components, Framer
-    Motion, Electron, Jest, Vitest, Cypress, Playwright,
-    Harbor, Apigee, Azure, CI/CD, SCRUM, Google Cloud,
-    Pipelines, Backstage, Turbo, Testes Unitários, Testes de Integração,
-    Testes End-to-End, Testes de API, Web
-    Spring Boot, Express, Fastify, Nest.js, React Native,
-    Expo, Git, GitHub, Figma, Netlify, Vercel, Heroku,
-    Storybook, Docker, Webpack, Babel, esbuild, swc,
-    Jira, Trello, Monday, Notion, Slack, Discord
+    \textbf{Desenvolvimento de Software:} Java, C\# (.NET), Python (FastAPI), Node.js (NestJS), TypeScript, Vue.js, React, Next.js, Prisma, Supabase, PostgreSQL, Docker, CI/CD (GitHub Actions), Git.
     
-    \section{Experiência}
-    
-    \begin{twocolentry}
-        { Setembro 2024 - Atual } \textbf{Desenvolvedor Full Stack}, {\hrefWithoutArrow{https://www.hp.com/us-en/home.html}{HP inc - Palo Alto, Califórnia}}.
-    \end{twocolentry}
-    
-    \vspace{0.10 cm}
-    \begin{onecolentry}
-        \begin{highlights}
-            \item Desenvolvimento e manutenção do portal hp.dev, entregando lançamentos semanais com uma equipe de alto nível de engenheiros full stack, arquitetos, PMO's, PO's e QA's. React, Vite, GraphQL, Backstage, Express, NodeJS
-            \item Contribuição para a cobertura de testes unitários, e a cobertura de testes de integração no último trimestre de 2024 aumentando em 87\% - React Testing Library, Jest.
-            \item Arquitetura, desenvolvimento, manutenção e deploy do Apigee X Integration. Uma aplicação que permite o auto-gerenciamento de certificados, gerenciamento de acesso de usuários, lista de permissões de IP, keystores TLS, referências, servidores de destino, etc.
-            \item Trabalhei no projeto ApiM, uma nova plataforma de gerenciamento de APIs para a HP, utilizando Apigee, Harbor, Azure, Java, Spring Boot, Docker, Arquitetura Limpa, SOLID.
-            \item Desenvolvi um novo pipeline para implantar servidores-alvo no Apigee apenas carregando um arquivo JSON, reduzindo o tempo de implantação de novas APIs.
-        \end{highlights}
-    \end{onecolentry}
-    
+    \textbf{Automação Industrial:} PLC (Siemens S7-1200/1500, Rockwell Control/Compact/MicroLogix, Schneider), HMI/SCADA (AVEVA System Platform, InTouch, Historian, FactoryTalk), SQL Server, Redes Industriais, Integração IT/OT.
+
+	\section{Experiência}
+	
+	\begin{twocolentry}
+		{ Set 2025 - Atual } \textbf{Co-Founder \& Tech Lead}, Startup de Tecnologia (Em Desenvolvimento)
+	\end{twocolentry}
+	
+	\vspace{0.10 cm}
+	\begin{onecolentry}
+		\begin{highlights}
+			\item \textbf{Liderança de Produto:} Arquitetura de dois produtos SaaS B2B/B2C: um ERP para Gestão Municipal (encaminhamentos, NF, agendas) e uma Plataforma Financeira 360º (Investimentos, Cripto e Sucessão Patrimonial).
+            \item \textbf{DevOps \& Qualidade:} Configuração de pipeline rigoroso de CI/CD (GitHub Actions) para deploy automatizado (Vercel/Render) com execução de testes (Jest) em cada Commit e Pull Request.
+            \item \textbf{Mentoria \& Capacitação:} Capacitação de desenvolvedor júnior, que evoluiu para uma atuação full stack autônoma na resolução de Issues e entrega de features após mentoria técnica intensiva.
+			\item \textbf{Stack Tecnológica:} Utilização de Next.js, NestJS, Prisma e Supabase para criar soluções escaláveis e de alta performance.
+		\end{highlights}
+	\end{onecolentry}
+
     \vspace{0.2 cm}
-    
+
     \begin{twocolentry}
-        { Maio 2024 - Agosto 2024 } \textbf{Desenvolvedor Full Stack},  {\hrefWithoutArrow{https://comhub.com.br/}{COMHUB - Lapa, São Paulo}}.
-    \end{twocolentry}
-    
-    \vspace{0.10 cm}
-    \begin{onecolentry}
-        \begin{highlights}
-            \item Responsável pela arquitetura, desenvolvimento, testes e entrega de um iFrame com IA para gerar resumos de conversas conectadas ao WhatsApp para agentes de suporte no maior sistema contábil do Brasil, resultando em mais de 50.000 novos assinantes para este projeto. - NextJS | Fastify | Vitest | MySQL | Prisma | SOLID | Arquitetura Limpa | TailwindCSS | Axios | OpenAI API | Swagger | TypeScript | Docker | CI/CD | SCRUM
-            \item Criação do front-end para um Hub Contábil para gerenciar arquivos de contadores em todo o Brasil, consistindo em um sistema Admin e Cliente usando NextJS | TypeScript | ZOD | React Query | Zustand | Ky | Tailwind | Shadcn | Next Auth | Código Limpo | CI/CD
-        \end{highlights}
-    \end{onecolentry}
-    
+		{ Jun 2025 - Atual } \textbf{Desenvolvedor Full Stack}, Bunkerchain (Singapura/Remoto)
+	\end{twocolentry}
+	
+	\vspace{0.10 cm}
+	\begin{onecolentry}
+		\begin{highlights}
+            \item \textbf{Desenvolvimento de Produto (Touch and Sail):} Atuação no desenvolvimento do sistema "Touch and Sail" (e-BDN), uma solução de \textit{Digital Bunkering} para gestão de operações marítimas críticas em tempo real.
+			\item \textbf{Frontend Complexo (Vue.js):} Desenvolvimento diário de interfaces dinâmicas e formulários para inserção de dados operacionais, garantindo alta responsividade e visualização de dados em tempo real.
+            \item \textbf{Backend \& Integração:} Consumo intensivo de APIs Java e realização de manutenção corretiva (bug fix) no backend para assegurar a integridade dos dados e a comunicação fluida entre front e back.
+            \item \textbf{Processos Internacionais:} Participação ativa em rituais ágeis (Dailies, Demos) em inglês, suporte técnico direto a clientes internacionais e gestão de bugs/tickets via Mantis.
+		\end{highlights}
+	\end{onecolentry}
+	
+	\vspace{0.2 cm}
+	
+	\begin{twocolentry}
+		{ Ago 2024 - Mai 2025 } \textbf{Desenvolvedor de Sistemas}, MAIMA Tecnologia
+	\end{twocolentry}
+	
+	\vspace{0.10 cm}
+	\begin{onecolentry}
+		\begin{highlights}
+            \item \textbf{Automação SAP (RPA):} Desenvolvimento de robôs em Python para automação de 4-6 processos críticos diários no SAP, reduzindo o tempo de execução manual de 8 horas para apenas 2 minutos.
+			\item \textbf{Manutenção Preditiva (Forecast):} Implementação de sistema em C\# para previsão de paradas de máquina com base na análise da qualidade do produto (cerdas dentais), antecipando falhas críticas.
+            \item \textbf{Arquitetura de Microsserviços:} Segregação de responsabilidades em microsserviços distribuídos (Análise de Imagem, Dados, BFF), garantindo escalabilidade e manutenção simplificada.
+            \item \textbf{Suporte \& Chatbot:} Contribuição no desenvolvimento de Chatbot com Adaptive Cards para suporte operacional ao sistema de qualidade.
+		\end{highlights}
+	\end{onecolentry}
+	
+	\vspace{0.2 cm}
+	
+	\begin{twocolentry}
+		{ Jun 2022 - Ago 2024 } \textbf{Técnico em Automação}, S.Build Automação
+	\end{twocolentry}
+	
+	\vspace{0.10 cm}
+	\begin{onecolentry}
+		\begin{highlights}
+			\item \textbf{Automação de Dados (Python/MES):} Criação de scripts em Python para gerar Queries SQL dinâmicas, atualizando em massa milhares de registros no AVEVA MES, tarefa inviável manualmente.
+            \item \textbf{Engenharia de Campo \& Startups:} Atuação intensiva em viagens para comissionamento de obras \textit{in loco}. Especialista na implementação de ecossistemas \textbf{AVEVA System Platform}, desenvolvimento de interfaces \textbf{InTouch} e configuração de \textbf{Historian} em ambientes críticos.
+            \item \textbf{Tech Stack Industrial:} Projetos entregues com PLCs Siemens (S7-1200/1500), Rockwell (Control/Compact/MicroLogix) e Schneider. Configuração de redes (Profinet, Ethernet/IP, Modbus, OPC) e fluxos com \textbf{AVEVA WorkTasks}.
+            \item \textbf{Infraestrutura \& Retrofit:} Migração de legado (1995 $\rightarrow$ 2023) e retrofit de máquinas sem documentação (engenharia reversa). Upgrade de 20+ servidores e gestão via ThinManager.
+		\end{highlights}
+	\end{onecolentry}
+
     \vspace{0.2 cm}
-    
+
     \begin{twocolentry}
-        { Outubro 2023 - Maio 2024 } \textbf{Desenvolvedor Full Stack}, {\hrefWithoutArrow{https://anjunexpress.com.br/}{ANJUN EXPRESS - Perus, São Paulo}}.
-    \end{twocolentry}
+		{ Set 2021 - Fev 2023 } \textbf{Competidor WorldSkills (Mecatrônica)}, SENAI Roberto Simonsen
+	\end{twocolentry}
+	
+	\vspace{0.10 cm}
+	\begin{onecolentry}
+		\begin{highlights}
+            \item \textbf{Alta Performance \& Conquistas:} Selecionado como \textbf{Melhor Aluno (Top 1)} do SENAI Roberto Simonsen para compor a equipe de elite. A equipe sagrou-se \textbf{Campeã Estadual} (São Paulo Skills).
+            \item \textbf{Treinamento de Elite:} Rotina de 8-10 horas diárias focada em excelência operacional, montagem mecânica/elétrica de precisão e programação sob pressão de tempo.
+			\item \textbf{Tecnologia Festo MPS:} Montagem, comissionamento e programação de estações industriais complexas (\textit{Distributing, Sorting, Testing, Handling/Robot}), simulando processos reais de separação, medição e envase (Filling).
+            \item \textbf{Indústria 4.0:} Integração avançada de sensores inteligentes via \textbf{IO-Link} e redes industriais, garantindo comunicação eficiente entre sensores e PLCs Siemens S7-1500.
+		\end{highlights}
+	\end{onecolentry}
+	
+    \section{Certificações}
     
-    \vspace{0.10 cm}
-    \begin{onecolentry}
-        \begin{highlights}
-            \item Coordenei o desenvolvimento de um software de emissão de documentos que gerou mais de 20 milhões de dólares em receita para a empresa e regularizou suas atividades no Brasil, utilizando NextJS | React | TypeScript | Tailwind | Jest | CI/CD | Git
-            \item Contribuí para uma biblioteca interna de componentes de interface de usuário que aumentou a produtividade em aproximadamente 40\% para todos os desenvolvimentos envolvendo interfaces de usuário, utilizando Shadcn | TypeScript | Storybook | Tailwind | Git.
-        \end{highlights}
-    \end{onecolentry}
-    
-    \vspace{0.2 cm}
-    
+    \begin{highlights}
+        \item \textbf{CSI AVEVA} Manufacturing Execution System (MES) 2020 - Operations \& Performance Exams
+        \item \textbf{CSI AVEVA} Application Server 2023 Exam
+        \item \textbf{Formação .NET Developer} (DIO - 93h)
+        \item \textbf{Java COMPLETO Programação Orientada a Objetos + Projetos} (Udemy - 54.5h)
+        \item \textbf{Formação Node.js Fundamentals} (DIO - 30h)
+    \end{highlights}
+
+	\section{Educação}
+	
+	\begin{twocolentry}
+		{2023 - 2025} \textbf{UNINTER}, Análise e Desenvolvimento de Sistemas
+	\end{twocolentry}
+	
+	\begin{twocolentry}
+		{2021 -  2022} \textbf{SENAI Roberto Simonsen}, Técnico em Redes de Computadores
+	\end{twocolentry}
+
     \begin{twocolentry}
-        { Maio 2022 - Outubro 2023 } \textbf{Desenvolvedor de Mecatrônica}, {\hrefWithoutArrow{https://anjunexpress.com.br/}{Metrô de São Paulo}}.
-        \vspace{0.10 cm}
-    \begin{onecolentry}
-        \begin{highlights}
-           \item Desenvolvimento de sistemas de controle e automação para o Metrô de São Paulo, utilizando C++ | Python | PLC | Arduino | Raspberry Pi | CNC | Robótica | Eletroeletrônica | Mecânica.
-           
-        \end{highlights}
-    \end{onecolentry}
-    \end{twocolentry}
-    
-    \begin{twocolentry}
-        { Janeiro 2020 - Março 2022 } \textbf{Desenvolvedor de Software}, 2LT Engineering
-    \end{twocolentry}
-    
-    
-    \section{Educação}
-    
-    \begin{twocolentry}
-        {2025 - 2029} \textbf{UNICESUMAR}, Engenharia de Software - Bacharelado
-    \end{twocolentry}
-    
-    \begin{twocolentry}
-        {2020 -  2023} \textbf{ETEC Parque Belem}, Desenvolvimento de Software - Técnico
-    \end{twocolentry}
-    
-    \section{Idiomas}
-    
-    \begin{onecolentry}
-        \begin{highlights}
-            \item Inglês (C1)
-            \item Português (Nativo)
-            \item Espanhol (B2)
-        \end{highlights}
-    \end{onecolentry}
-    
+		{2020 -  2022} \textbf{SENAI Roberto Simonsen}, Eletricista de Manutenção Eletroeletrônica
+	\end{twocolentry}
+	
+	\section{Idiomas}
+	
+	\begin{onecolentry}
+		\begin{highlights}
+			\item Inglês (C1 - Avançado)
+			\item Português (Nativo)
+		\end{highlights}
+	\end{onecolentry}
+	
 \end{document}

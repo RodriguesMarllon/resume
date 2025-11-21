@@ -17,9 +17,9 @@
 \usepackage{etoolbox} % for conditional statements
 \usepackage{amsmath} % for math
 \usepackage[
-	pdftitle={Victor Micco's CV},
-	pdfauthor={Victor Micco},
-	pdfcreator={Victor Micco},
+	pdftitle={Marllon Rodrigues's CV},
+	pdfauthor={Marllon Rodrigues},
+	pdfcreator={Marllon Rodrigues},
 	colorlinks=true,
 	urlcolor=primaryColor
 ]{hyperref} % for links, metadata and bookmarks
@@ -79,7 +79,8 @@ parsep=0.10 cm, partopsep=0pt, itemsep=0pt, leftmargin=10pt ] }{ \end{itemize} }
 \begin{paracol}{2} }{ \switchcolumn \raggedleft \secondColumn \end{paracol}
 \endonecolentry } % new environment for two column entries
 
-\newenvironment{threecolentry}[3][]{ \onecolentry \def\thirdColumn{#3} \setcolumnwidth{, \fill, 4.5 cm}
+\newenvironment{threecolentry}[3][]{ \onecolentry 
+\def\thirdColumn{#3} \setcolumnwidth{, \fill, 4.5 cm}
 \begin{paracol}{3} {\raggedright #2} \switchcolumn }{ \switchcolumn \raggedleft \thirdColumn
 \end{paracol} \endonecolentry } % new environment for three column entries
 
@@ -91,7 +92,7 @@ parsep=0.10 cm, partopsep=0pt, itemsep=0pt, leftmargin=10pt ] }{ \end{itemize} }
 
 \newcommand{\placelastupdatedtext}{% \placetextbox{<horizontal pos>}{<vertical pos>}{<stuff>}
 \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
-\put( \LenToUnit{\paperwidth-2 cm-0 cm+0.05cm}, \LenToUnit{\paperheight-1.0 cm} ){\vtop{{\null}\makebox[0pt][c]{ \small\color{gray}\textit{Last updated in September 2024}\hspace{\widthof{Last updated in September 2024}} }}}%
+\put( \LenToUnit{\paperwidth-2 cm-0 cm+0.05cm}, \LenToUnit{\paperheight-1.0 cm} ){\vtop{{\null}\makebox[0pt][c]{ \small\color{gray}\textit{Last updated in November 2025}\hspace{\widthof{Last updated in November 2025}} }}}%
 }%
 }%
 
@@ -106,145 +107,140 @@ parsep=0.10 cm, partopsep=0pt, itemsep=0pt, leftmargin=10pt ] }{ \end{itemize} }
 	\sbox{\ANDbox}{$|$}
 
 	\begin{header}
-		\fontsize{25 pt}{25 pt}\selectfont Victor Micco
+		\fontsize{25 pt}{25 pt}\selectfont Marllon Rodrigues
 
-        \fontsize{18 pt}{18 pt}\selectfont Full Stack Engineer
+        \fontsize{18 pt}{18 pt}\selectfont Software \& Automation Engineer
 
 		\vspace{5 pt}
 
 		\normalsize
-		% \mbox{Your Location}%
-		% \kern 5.0 pt%
-		% \AND%
-		% \kern 5.0 pt%
-		\mbox{\hrefWithoutArrow{mailto:victor.oficial093@gmail.com}{victor.oficial093@gmail.com}}%
+		\mbox{\hrefWithoutArrow{mailto:marllonrsantos@gmail.com}{marllonrsantos@gmail.com}}%
 		\kern 5.0 pt%
 		\AND%
 		\kern 5.0 pt%
-		% \mbox{\hrefWithoutArrow{tel:+90-541-999-99-99}{0541 999 99 99}}%
-		% \kern 5.0 pt%
-		% \AND%
-		% \kern 5.0 pt%
-		\mbox{\hrefWithoutArrow{https://victormicco.com.br}{victormicco.com.br}}%
+		\mbox{\hrefWithoutArrow{https://linkedin.com/in/rodriguesmarllon}{linkedin.com/in/rodriguesmarllon}}%
 		\kern 5.0 pt%
 		\AND%
 		\kern 5.0 pt%
-		\mbox{\hrefWithoutArrow{https://linkedin.com/in/victormicco}{linkedin.com/in/victormicco}}%
-		\kern 5.0 pt%
-		\AND%
-		\kern 5.0 pt%
-		\mbox{\hrefWithoutArrow{https://github.com/victormicco}{github.com/victormicco}}%
+		\mbox{\hrefWithoutArrow{https://github.com/rodriguesmarllon}{github.com/rodriguesmarllon}}%
 	\end{header}
 
-	\section{Skills}
+	\section{Technical Skills}
 
-	Java, JavaScript (ES2015+), TypeScript,
-    SQL, GraphQL, React, Next.js, Vite,
-	Node.js, Tailwind CSS, Styled Components, Framer
-	Motion, Electron, Jest, Vitest, Cypress, Playwright,
-    Harbor, Apigee, Azure, CI/CD, SCRUM, Google Cloud,
-    Pipelines, Backstage, Turbo, Unit Testing, Integration
-    Testing, End-to-End Testing, API Testing, Web
-	Spring Boot, Express, Fastify, Nest.js, React Native,
-	Expo, Git, GitHub, Figma, Netlify, Vercel, Heroku,
-	Storybook, Docker, Webpack, Babel, esbuild, swc,
-	Jira, Trello, Monday, Notion, Slack, Discord
+    \textbf{Software Development:} Java, C\# (.NET), Python (FastAPI), Node.js (NestJS), TypeScript, Vue.js, React, Next.js, Prisma, Supabase, PostgreSQL, Docker, CI/CD (GitHub Actions), Git.
+    
+    \textbf{Industrial Automation:} PLC (Siemens S7-1200/1500, Rockwell Control/Compact/MicroLogix, Schneider), HMI/SCADA (AVEVA System Platform, InTouch, Historian, FactoryTalk, ISA-101), SQL Server, Industrial Networks, IT/OT Integration.
 	
 	\section{Experience}
 	
 	\begin{twocolentry}
-		{ September 2024 - Current } \textbf{Full Stack Engineer}, {\hrefWithoutArrow{https://www.hp.com/us-en/home.html}{HP inc}}.
+		{ Sep 2025 - Present } \textbf{Co-Founder \& Tech Lead}, Tech Startup (In Development)
 	\end{twocolentry}
 	
 	\vspace{0.10 cm}
 	\begin{onecolentry}
 		\begin{highlights}
-			\item Developed and maintained hp.dev portal, delivering releases weekly with a high-level team of full stack engineers. React, Vite, GraphQL, Backstage, Express, NodeJS
-			\item Increase unit test coverage by 67\% and integration test coverage by 45\% in the last quarter of 2024 - React Testing Library, Jest.
-			\item Worked on the ApiM project, a new API management platform for HP, using Apigee, Harbor, Azure, Java, Spring Boot, Docker, Clean Architeture, SOLID.
-            \item Whole development of a new pipeline to deploy target servers on the Apigee uploading just a JSON file, reducing the deployment time of new API's by 73\%.
-			\item Wrote clean, maintainable code and conducted code reviews, ensuring high-quality code standards.
-		\end{highlights}
-	\end{onecolentry}
-	
-	\vspace{0.2 cm}
-	
-	\begin{twocolentry}
-		{ May 2024 - August 2024 } \textbf{Full Stack Engineer}, COMHUB
-	\end{twocolentry}
-	
-	\vspace{0.10 cm}
-	\begin{onecolentry}
-		\begin{highlights}
-			\item Responsible for the architecture, development, testing, and delivery of an AI-powered iFrame to generate summaries of
-            conversations connected to WhatsApp for support agents in the largest accounting system in Brazil, resulting in over 50,000 new
-            subscribers for this new project. - NextJS | Fastify | Vitest | MySQL | Prisma | SOLID | Clean Architecture | TailwindCSS | Axios |
-            OpenAI API | Swagger | TypeScript | Docker | CI/CD | SCRUM
-			\item Creation of the front-end for a Accounting Hub for managing accountants' files across Brazil, consisting of an Admin and Client
-            system using NextJS | TypeScript | ZOD | React Query | Zustand | Ky | Tailwind | Shadcn | Next Auth | Clean Code | CI/CD
-		\end{highlights}
-	\end{onecolentry}
-	
-	\vspace{0.2 cm}
-	
-	\begin{twocolentry}
-		{ October 2023 - May 2024 } \textbf{Full Stack Engineer}, ANJUN BRAZIL
-	\end{twocolentry}
-	
-	\vspace{0.10 cm}
-	\begin{onecolentry}
-		\begin{highlights}
-			\item Coordinated the development of a document issuance software that generated over 20 million dollars in revenue for the company and
-            regularized its activities in Brazil, using NextJS | React | TypeScript | Tailwind | Jest | CI/CD | Git            
-			\item Contributed to an internal library of user interface components that increased productivity by approximately 40\% for all
-            developments involving user interfaces, using Shadcn | TypeScript | Storybook | Tailwind | Git.
-            \item Collaborated in English with international teams to integrate front and back-end solutions seamlessly
-		\end{highlights}
-	\end{onecolentry}
-	
-	\vspace{0.2 cm}
-	
-	\begin{twocolentry}
-		{ May 2022 - October 2023 } \textbf{Mechatronics Developer}, Metrô de São Paulo
-	\end{twocolentry}
-	
-	\vspace{0.10 cm}
-	\begin{onecolentry}
-		\begin{highlights}
-			\item Responsible for developing scalable software, combining mechatronic automation with mobile and desktop applications
-            using Electron | React Native | TypeScript | React | Git | Jenkins | Styled Components | Arduino | CNC | C++ | C\#
+			\item \textbf{Product Leadership:} Architecture of two SaaS products B2B/B2C: a Municipal Management ERP (referrals, invoices, agendas) and a 360º Financial Platform (Investments, Crypto, and Estate Planning).
+            \item \textbf{DevOps \& Quality:} Configuration of rigorous CI/CD pipelines (GitHub Actions) for automated deployment (Vercel/Render) with test execution (Jest) on every Commit and Pull Request.
+            \item \textbf{Mentorship \& Training:} Mentoring of a junior developer, who evolved into an autonomous full stack role resolving Issues and delivering features after intensive technical mentorship.
+			\item \textbf{Tech Stack:} Utilization of Next.js, NestJS, Prisma, and Supabase to create scalable and high-performance solutions.
 		\end{highlights}
 	\end{onecolentry}
 
+    \vspace{0.2 cm}
+
     \begin{twocolentry}
-		{ January 2020 - March 2022 } \textbf{Software Engineer}, 2LT Engineering
+		{ Jun 2025 - Present } \textbf{Full Stack Engineer}, Bunkerchain (Singapore/Remote)
 	\end{twocolentry}
 	
 	\vspace{0.10 cm}
 	\begin{onecolentry}
 		\begin{highlights}
-			\item Responsible for creating all internal software and the commercial website from scratch using HTML | CSS | JavaScript |
-            PHP | React | Styled Components | CSS Modules | NodeJS | Git.            
+			\item \textbf{Product Development (Touch and Sail):} Working on the development of "Touch and Sail" (e-BDN), a \textit{Digital Bunkering} solution for critical maritime operations management in real-time.
+            \item \textbf{Complex Frontend (Vue.js):} Daily development of dynamic interfaces and forms for operational data entry, ensuring high responsiveness and real-time data visualization.
+            \item \textbf{Backend \& Integration:} Intensive consumption of Java APIs and corrective maintenance (bug fix) on the backend to ensure data integrity and fluid communication between front and back.
+            \item \textbf{International Processes:} Active participation in agile rituals (Dailies, Demos) in English, direct technical support to international clients, and bug/ticket management via Mantis.
 		\end{highlights}
 	\end{onecolentry}
 	
+	\vspace{0.2 cm}
+	
+	\begin{twocolentry}
+		{ Aug 2024 - May 2025 } \textbf{Systems Developer}, MAIMA Technology
+	\end{twocolentry}
+	
+	\vspace{0.10 cm}
+	\begin{onecolentry}
+		\begin{highlights}
+			\item \textbf{SAP Automation (RPA):} Development of Python robots for the automation of 4-6 daily critical SAP processes, reducing manual execution time from 8 hours to just 2 minutes.
+			\item \textbf{Predictive Maintenance (Forecast):} Implementation of a C\# system for machine downtime prediction based on product quality analysis (dental bristles), anticipating critical failures.
+            \item \textbf{Microservices Architecture:} Segregation of responsibilities into distributed microservices (Image Analysis, Data, BFF), ensuring scalability and simplified maintenance.
+            \item \textbf{Support \& Chatbot:} Contribution to the development of a Chatbot with Adaptive Cards for operational support to the quality system.
+		\end{highlights}
+	\end{onecolentry}
+	
+	\vspace{0.2 cm}
+	
+	\begin{twocolentry}
+		{ Jun 2022 - Aug 2024 } \textbf{Automation Technician}, S.Build Automation
+	\end{twocolentry}
+	
+	\vspace{0.10 cm}
+	\begin{onecolentry}
+		\begin{highlights}
+			\item \textbf{Data Automation (Python/MES):} Creation of Python scripts to generate dynamic SQL Queries, mass updating thousands of records in AVEVA MES, a task unfeasible manually.
+            \item \textbf{Field Engineering \& Startups:} Intensive fieldwork traveling for \textit{on-site} commissioning. Specialist in implementing \textbf{AVEVA System Platform} ecosystems, \textbf{InTouch} interface development, and \textbf{Historian} configuration in critical environments.
+            \item \textbf{Industrial Tech Stack:} Projects delivered with Siemens PLCs (S7-1200/1500), Rockwell (Control/Compact/MicroLogix), and Schneider. Configuration of networks (Profinet, Ethernet/IP, Modbus, OPC) and workflows with \textbf{AVEVA WorkTasks}.
+            \item \textbf{Infrastructure \& Retrofit:} Legacy migration (1995 $\rightarrow$ 2023) and retrofit of undocumented machines (reverse engineering). Upgrade of 20+ servers and management via ThinManager.
+		\end{highlights}
+	\end{onecolentry}
+
+    \vspace{0.2 cm}
+
+    \begin{twocolentry}
+		{ Sep 2021 - Feb 2023 } \textbf{WorldSkills Competitor (Mechatronics)}, SENAI Roberto Simonsen
+	\end{twocolentry}
+	
+	\vspace{0.10 cm}
+	\begin{onecolentry}
+		\begin{highlights}
+			\item \textbf{High Performance \& Achievements:} Selected as \textbf{Best Student (Top 1)} of SENAI Roberto Simonsen to join the elite team. The team became \textbf{State Champion} (São Paulo Skills).
+            \item \textbf{Elite Training:} Routine of 8-10 daily hours focused on operational excellence, precision mechanical/electrical assembly, and programming under time pressure.
+            \item \textbf{Festo MPS Technology:} Assembly, commissioning, and programming of complex industrial stations (\textit{Distributing, Sorting, Testing, Handling/Robot}), simulating real separation, measurement, and filling processes.
+            \item \textbf{Industry 4.0:} Advanced integration of intelligent sensors via \textbf{IO-Link} and industrial networks, ensuring efficient communication between sensors and Siemens S7-1500 PLCs.
+		\end{highlights}
+	\end{onecolentry}
+	
+    \section{Certifications}
+    
+    \begin{highlights}
+        \item \textbf{CSI AVEVA} Manufacturing Execution System (MES) 2020 - Operations \& Performance Exams
+        \item \textbf{CSI AVEVA} Application Server 2023 Exam
+        \item \textbf{.NET Developer Bootcamp} (DIO - 93h)
+        \item \textbf{Java Object-Oriented Programming} (Udemy - 54.5h)
+        \item \textbf{Node.js Fundamentals} (DIO - 30h)
+    \end{highlights}
+    
 	\section{Education}
 	
 	\begin{twocolentry}
-		{2025 - 2029} \textbf{UNICESUMAR}, Software Engineering - Bachelor's Degree
+		{2023 - 2025} \textbf{UNINTER}, Systems Analysis and Development
 	\end{twocolentry}
 	
 	\begin{twocolentry}
-		{2020 -  2023} \textbf{ETEC Parque Belem}, Software Development - Associate's Degree
+		{2021 -  2022} \textbf{SENAI Roberto Simonsen}, Computer Networks Technician
+	\end{twocolentry}
+
+    \begin{twocolentry}
+		{2020 -  2022} \textbf{SENAI Roberto Simonsen}, Electronics Maintenance Electrician
 	\end{twocolentry}
 	
 	\section{Languages}
 	
 	\begin{onecolentry}
 		\begin{highlights}
-			\item English (C1)
+			\item English (C1 - Advanced)
 			\item Portuguese (Native)
-			\item Spanish (B2)
 		\end{highlights}
 	\end{onecolentry}
 	

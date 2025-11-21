@@ -1,6 +1,6 @@
-# Victor Micco's Resume
+# Marllon's Resume
 
-This repository contains Victor Micco's resume, developed using LaTeX.
+This repository contains Marllon's resume, developed using LaTeX.
 
 ## Main Files
 
