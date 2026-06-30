@@ -1,0 +1,231 @@
+\documentclass[10pt, letterpaper]{article}
+
+% Packages:
+\usepackage[
+	ignoreheadfoot,
+	top=1 cm,
+	bottom=1 cm,
+	left=1 cm,
+	right=1 cm,
+	footskip=1 cm,
+]{geometry}
+\usepackage{titlesec}
+\usepackage[dvipsnames]{xcolor}
+\definecolor{primaryColor}{RGB}{0, 0, 0}
+\usepackage{enumitem}
+\usepackage{etoolbox}
+\usepackage{amsmath}
+\usepackage[
+	pdftitle={Marllon Rodrigues's CV},
+	pdfauthor={Marllon Rodrigues},
+	pdfcreator={Marllon Rodrigues},
+	colorlinks=true,
+	urlcolor=primaryColor
+]{hyperref}
+\usepackage[pscoord]{eso-pic}
+\usepackage{calc}
+\usepackage{bookmark}
+\usepackage{changepage}
+\usepackage{paracol}
+\usepackage{needspace}
+\usepackage{iftex}
+
+\ifPDFTeX
+\input{glyphtounicode}
+\pdfgentounicode=1
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\fi
+
+\usepackage{charter}
+
+\raggedright
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt}
+\pagestyle{empty}
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\topskip}{0pt}
+\setlength{\columnsep}{0.15cm}
+\pagenumbering{gobble}
+
+\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[
+\vspace{1pt}
+\titlerule]
+
+\titlespacing{\section}{
+-1pt }{
+0.3 cm }{
+0.2 cm }
+
+\renewcommand{\labelitemi}{$\vcenter{\hbox{\small$\bullet$}}$}
+\newenvironment{highlights}{ \begin{itemize}[ topsep=0.10 cm, parsep=0.10 cm, partopsep=0pt,
+itemsep=0pt, leftmargin=0 cm + 10pt ] }{ \end{itemize} }
+
+\newenvironment{highlightsforbulletentries}{ \begin{itemize}[ topsep=0.10 cm,
+parsep=0.10 cm, partopsep=0pt, itemsep=0pt, leftmargin=10pt ] }{ \end{itemize} }
+
+\newenvironment{onecolentry}{ \begin{adjustwidth}{ 0 cm + 0.00001 cm }{ 0 cm + 0.00001 cm }
+}{ \end{adjustwidth} }
+
+\newenvironment{twocolentry}[2][]{ \onecolentry \def\secondColumn{#2} \setcolumnwidth{\fill, 4.5 cm}
+\begin{paracol}{2} }{ \switchcolumn \raggedleft \secondColumn \end{paracol}
+\endonecolentry }
+
+\newenvironment{threecolentry}[3][]{ \onecolentry
+\def\thirdColumn{#3} \setcolumnwidth{, \fill, 4.5 cm}
+\begin{paracol}{3} {\raggedright #2} \switchcolumn }{ \switchcolumn \raggedleft \thirdColumn
+\end{paracol} \endonecolentry }
+
+\newenvironment{header}{
+\setlength{\topsep}{0pt}
+\par\kern\topsep
+\centering
+\linespread{1.5} }{ \par\kern\topsep }
+
+\newcommand{\placelastupdatedtext}{%
+\AddToShipoutPictureFG*{%
+\put( \LenToUnit{\paperwidth-2 cm-0 cm+0.05cm}, \LenToUnit{\paperheight-1.0 cm} ){\vtop{{\null}\makebox[0pt][c]{ \small\color{gray}\textit{Last updated in June 2026}\hspace{\widthof{Last updated in June 2026}} }}}%
+}%
+}%
+
+\let\hrefWithoutArrow\href
+
+\begin{document}
+	\newcommand{\AND}{\unskip \cleaders\copy\ANDbox\hskip\wd\ANDbox \ignorespaces }
+	\newsavebox{\ANDbox}
+	\sbox{\ANDbox}{$|$}
+
+	\begin{header}
+		\fontsize{25 pt}{25 pt}\selectfont Marllon Rodrigues
+
+		\fontsize{18 pt}{18 pt}\selectfont Full Stack Software Engineer
+
+		\vspace{5 pt}
+
+		\normalsize
+		\mbox{\hrefWithoutArrow{mailto:marllonrsantos@gmail.com}{marllonrsantos@gmail.com}}%
+		\kern 5.0 pt%
+		\AND%
+		\kern 5.0 pt%
+		\mbox{\hrefWithoutArrow{https://linkedin.com/in/rodriguesmarllon}{linkedin.com/in/rodriguesmarllon}}%
+		\kern 5.0 pt%
+		\AND%
+		\kern 5.0 pt%
+		\mbox{\hrefWithoutArrow{https://github.com/rodriguesmarllon}{github.com/rodriguesmarllon}}%
+	\end{header}
+
+	\section{Technical Skills}
+
+	\textbf{Software:} TypeScript, Node.js (Fastify, Express), React, Vue.js, Python, PostgreSQL, Prisma, Redis, Docker, CI/CD (GitHub Actions), C\# (.NET), Git, Cloudflare R2, REST API design.
+
+	\textbf{Domain:} Multi-tenant SaaS architecture, RBAC \& security hardening, cryptographic systems (ECDSA), predictive analytics (Z-score, ETS), industrial IT/OT integration, SCADA/HMI systems.
+
+	\section{Experience}
+
+	\begin{twocolentry}
+		{ Jun 2025 -- Feb 2026 } \textbf{Full Stack Engineer / Tech Lead}, Bunkerchain \textit{(Singapore/Remote)}
+	\end{twocolentry}
+
+	\vspace{0.10 cm}
+	\begin{onecolentry}
+		\begin{highlights}
+			\item \textbf{Maritime Platform (MVP 3.0):} Full-stack development on Marine Vessel Pass, a Port Identity Layer for international shipping covering vessel onboarding, port calls, bunkering, and digital compliance; FSM-driven port call lifecycle with regulatory holds and multi-signatory workflows.
+			\item \textbf{Multi-tenant SaaS Architecture:} Built a B2B platform from scratch with full multi-tenancy, granular RBAC, Kanban, SSE real-time notifications, and file uploads via Cloudflare R2. Stack: Fastify v5, React 19, Prisma, PostgreSQL, Redis; deployed on Vercel and Render. Mentored a junior developer to autonomous full-stack delivery.
+			\item \textbf{VPS Cryptographic Seal Verification:} Trust verification system for physical fuel sample bottle seals using ECDSA digital signatures, a public key registry, seal lifecycle state machine, and 6 REST API endpoints.
+			\item \textbf{Security \& RBAC:} Closed 10+ cross-tenant authorization bypass vulnerabilities across 12+ user roles; step-up authentication on sensitive operations; hash-chained audit logs with global sequence integrity.
+			\item \textbf{Financial Intelligence \& AI-Powered DevOps:} Predictive module with Z-score and ETS algorithms for automatic anomaly detection in budget data. CI/CD pipelines with autonomous AI agents for code review, security scanning (TruffleHog, CodeQL), and failure diagnostics on every commit.
+			\item \textbf{eBDN Platform (Methanol, delivered):} End-to-end delivery of the Terminal Role feature on the electronic Bunker Delivery Note system, from architecture to live client demo approval.
+		\end{highlights}
+	\end{onecolentry}
+
+	\vspace{0.2 cm}
+
+	\begin{twocolentry}
+		{ Aug 2024 -- May 2025 } \textbf{Systems Developer}, MAIMA Technology
+	\end{twocolentry}
+
+	\vspace{0.10 cm}
+	\begin{onecolentry}
+		\begin{highlights}
+			\item \textbf{SAP Automation (RPA):} Python robots automating 6 critical daily SAP processes, reducing execution time from 8 hours to 2 minutes.
+			\item \textbf{Predictive Maintenance:} C\# system for machine downtime prediction based on product quality analysis, anticipating critical failures before occurrence.
+			\item \textbf{Advanced Architecture:} Distributed microservices (Image Analysis, Data, BFF); AI-powered CI/CD pipelines with automated code review and security scanning on every commit; Z-score and ETS forecasting for automatic anomaly detection in operational data.
+		\end{highlights}
+	\end{onecolentry}
+
+	\vspace{0.2 cm}
+
+	\begin{twocolentry}
+		{ Feb 2026 -- Present } \textbf{Automation Analyst / Field Engineering Tools}, Tyconnex
+	\end{twocolentry}
+
+	\vspace{0.10 cm}
+	\begin{onecolentry}
+		\begin{highlights}
+			\item \textbf{Field Engineering Tool:} Built a custom offline TagFinder web app (single HTML file, 4.58MB) consolidating 3,432 P80 and 1,785 P83 equipment records across 168 panels, Modbus address tables, IEC 61850 signal catalog, and IP mapping for 1,339 devices; used daily by the field team.
+			\item \textbf{RDO Generator:} Automated daily report pipeline (Python + PyYAML + LaTeX + Docker); 27+ professional PDF reports generated, documenting 231 hours of on-site commissioning work.
+			\item \textbf{IT/OT Integration:} On-site engineer for AVEVA Plant SCADA on two FPSO platforms (Petrobras P80/P83) --- 50,000+ tags, Modbus TCP, IEC 61850 MMS, 5 industrial subnets.
+		\end{highlights}
+	\end{onecolentry}
+
+	\vspace{0.2 cm}
+
+	\begin{twocolentry}
+		{ Jun 2022 -- Aug 2024 } \textbf{Automation Technician}, S.Build Automation
+	\end{twocolentry}
+
+	\vspace{0.10 cm}
+	\begin{onecolentry}
+		\begin{highlights}
+			\item \textbf{Data Automation:} Python scripts for mass SQL updates in AVEVA MES; automated tasks across thousands of records previously requiring manual execution.
+			\item \textbf{Legacy Migration \& Retrofit:} Migration (1995 $\rightarrow$ 2023) with reverse-engineering of undocumented machines; upgrade of 20+ servers via ThinManager; on-site commissioning across critical industrial environments.
+			\item \textbf{Industrial Stack:} AVEVA System Platform, InTouch, Historian; Siemens S7-1200/1500, Rockwell, Schneider PLCs; Profinet, Ethernet/IP, Modbus, OPC networks.
+		\end{highlights}
+	\end{onecolentry}
+
+	\vspace{0.2 cm}
+
+	\begin{twocolentry}
+		{ Sep 2021 -- Feb 2023 } \textbf{WorldSkills Competitor (Mechatronics)}, SENAI Roberto Simonsen
+	\end{twocolentry}
+
+	\vspace{0.10 cm}
+	\begin{onecolentry}
+		\begin{highlights}
+			\item Competitor for SENAI Roberto Simonsen in the Mechatronics discipline. Training: 8--10 daily hours of precision assembly, PLC programming (Siemens S7-1500), Festo MPS stations, and Industry 4.0 integration via IO-Link.
+		\end{highlights}
+	\end{onecolentry}
+
+	\section{Certifications}
+
+	\begin{highlights}
+		\item \textbf{CSI AVEVA} Manufacturing Execution System (MES) 2020 -- Operations \& Performance Exams
+		\item \textbf{CSI AVEVA} Application Server 2023 Exam
+		\item \textbf{.NET Developer Bootcamp} (DIO -- 93h) \quad|\quad \textbf{Java OOP} (Udemy -- 54.5h) \quad|\quad \textbf{Node.js Fundamentals} (DIO -- 30h)
+	\end{highlights}
+
+	\section{Education}
+
+	\begin{twocolentry}
+		{2023 -- 2025} \textbf{UNINTER}, Systems Analysis and Development
+	\end{twocolentry}
+
+	\begin{twocolentry}
+		{2021 -- 2022} \textbf{SENAI Roberto Simonsen}, Computer Networks Technician
+	\end{twocolentry}
+
+	\begin{twocolentry}
+		{2020 -- 2022} \textbf{SENAI Roberto Simonsen}, Electronics Maintenance Electrician
+	\end{twocolentry}
+
+	\section{Languages}
+
+	\begin{onecolentry}
+		\begin{highlights}
+			\item English (C1 -- Advanced)
+			\item Portuguese (Native)
+		\end{highlights}
+	\end{onecolentry}
+
+\end{document}
