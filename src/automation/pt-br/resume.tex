@@ -137,29 +137,30 @@ parsep=0.10 cm, partopsep=0pt, itemsep=0pt, leftmargin=10pt ] }{ \end{itemize} }
 	\vspace{0.10 cm}
 	\begin{onecolentry}
 		\begin{highlights}
-			\item \textbf{Comissionamento FPSO (Petrobras P80/P83):} Engenheiro de comissionamento \textit{in loco} do AVEVA Plant SCADA (Citect) em duas plataformas offshore id\^enticas --- 50.000+ tags, 1.700+ dispositivos de campo, PLCs Schneider M580, 168 pain\'eis em 5 subredes industriais (MV 13,8kV, 6,6kV, BT, AUX, MULTIPROPOSITO).
+			\item \textbf{Comissionamento FPSO (Petrobras P80/P83):} Engenheiro in loco do AVEVA Plant SCADA (Citect) em duas plataformas offshore, com 50.000+ tags, 1.700+ dispositivos de campo, PLCs Schneider M580 e 168 pain\'eis em 5 subredes industriais (MV 13,8kV, 6,6kV, BT, AUX, MULTIPROPOSITO).
             \item \textbf{Integra\c{c}\~ao e Diagn\'ostico de VFDs:} Comissionamento e valida\c{c}\~ao de VFDs Danfoss (02A/02B/03A/03B) via Modbus TCP; diagn\'ostico de falhas W1007/W1022 por an\'alise ao vivo de registros. Comissionamento do bloco BT19 Ruhrpumpen MV 6,6kV (SCADA\_READ validado, controle de escrita completo).
-            \item \textbf{TGCP \& IEC 61850:} Comissionamento dos compressores de g\'as TG-5147001 A/B/C/D via Modbus TCP sobre RTDS; resolu\c{c}\~ao de falha cr\'itica de scaling de tag (Eng Full = 10.000.000, fator $\div$100 no TG02). Configura\c{c}\~ao e valida\c{c}\~ao de rel\'es SEL (F650, 869, 845) via IEC 61850 MMS --- 7.000+ sinais catalogados em 105 IEDs.
-			\item \textbf{Auditoria de Rede ESA:} Levantamento f\'isico de 77 a\c{c}\~oes de switch validadas; identificadas e reconciliadas 68 discrepâncias em switches Hirschmann (TES001--TES027) incluindo dispositivos rogue FMM sinalizados como P0.
-            \item \textbf{Ferramenta de Campo:} Desenvolvimento de aplica\c{c}\~ao offline TagFinder (HTML \'unico, 4,58MB) --- 3.432 registros P80 + 1.785 P83 em 168 pain\'eis, tabelas de endere\c{c}amento Modbus, cat\'alogo IEC 61850, mapeamento IP de 1.339 dispositivos; utilizado diariamente pela equipe de campo.
-            \item \textbf{Gerador de RDO:} Pipeline automatizado de Relat\'orio Di\'ario de Opera\c{c}\~oes (Python + PyYAML + LaTeX + Docker); 27+ relat\'orios PDF gerados, documentando 231 horas de comissionamento \textit{in loco}.
+            \item \textbf{TGCP \& IEC 61850:} Comissionamento dos compressores TG-5147001 A/B/C/D via Modbus TCP sobre RTDS; falha cr\'itica de scaling corrigida (Eng Full = 10.000.000, fator $\div$100 no TG02). Valida\c{c}\~ao de rel\'es SEL (F650, 869, 845) via IEC 61850 MMS, com 7.000+ sinais catalogados em 105 IEDs.
+			\item \textbf{Auditoria de Rede ESA:} 77 a\c{c}\~oes de switch levantadas fisicamente, com 68 discrepâncias identificadas e reconciliadas em switches Hirschmann (TES001--TES027), incluindo dispositivos rogue FMM sinalizados como P0.
+            \item \textbf{Ferramenta de Campo:} TagFinder offline (HTML \'unico, 4,58MB) reunindo 3.432 registros P80 e 1.785 P83 em 168 pain\'eis, tabelas Modbus, cat\'alogo IEC 61850 e mapeamento IP de 1.339 dispositivos; utilizado diariamente pela equipe.
+            \item \textbf{Gerador de RDO:} Pipeline automatizado de Relat\'orio Di\'ario (Python + PyYAML + LaTeX + Docker); 27+ PDFs gerados, documentando 231 horas de comissionamento in loco.
 		\end{highlights}
 	\end{onecolentry}
 
     \vspace{0.2 cm}
 
     \begin{twocolentry}
-		{ Jun 2025 -- Atual } \textbf{Desenvolvedor Full Stack}, Bunkerchain \textit{(Singapura/Remoto)}
+		{ Jun 2025 -- Atual } \textbf{Desenvolvedor Full Stack / Tech Lead}, Bunkerchain \textit{(Singapura/Remoto)}
 	\end{twocolentry}
 
 	\vspace{0.10 cm}
 	\begin{onecolentry}
 		\begin{highlights}
-			\item \textbf{Plataforma Mar\'itima (MVP 3.0):} Desenvolvimento full stack no Marine Vessel Pass --- Camada de Identidade Portu\'aria para navega\c{c}\~ao internacional cobrindo onboarding de embarca\c{c}\~oes, chamadas em porto, abastecimento e conformidade digital; ciclo de vida FSM com bloqueios regulat\'orios e fluxos multi-assinatura.
-            \item \textbf{Verifica\c{c}\~ao de Selos Criptogr\'aficos (VPS):} Projetou e desenvolveu sistema de verifica\c{c}\~ao de confian\c{c}a para selos f\'isicos de amostras de combust\'ivel --- assinaturas digitais ECDSA, registro de chaves p\'ublicas, m\'aquina de estados do ciclo de vida do selo, 6 endpoints REST.
-            \item \textbf{Hardening de Seguran\c{c}a (RBAC):} Fechou 10+ vulnerabilidades de bypass cross-tenant em 12+ pap\'eis de usu\'ario; autentica\c{c}\~ao step-up em opera\c{c}\~oes sens\'iveis; logs de auditoria com hash encadeado.
-            \item \textbf{Sistema de Identidade de Surveyor:} Papel de Surveyor Licenciado com perfil, gerenciamento de dispositivos e UI de roster; 186+ testes automatizados para cobertura completa de RBAC.
-			\item \textbf{Plataforma eBDN (Metanol, entregue):} Entrega end-to-end da feature Terminal Role no sistema de Nota de Entrega de Bunker eletr\^onica --- da arquitetura \`a aprova\c{c}\~ao em demo ao vivo com o cliente.
+			\item \textbf{Plataforma Mar\'itima (MVP 3.0):} Full stack no Marine Vessel Pass, plataforma de identidade portu\'aria para navega\c{c}\~ao internacional com onboarding de embarca\c{c}\~oes, chamadas em porto e bunkering; ciclo de vida em FSM com bloqueios regulat\'orios e fluxos multi-assinatura.
+            \item \textbf{Arquitetura SaaS Multi-tenant:} Constru\c{c}\~ao de plataforma B2B do zero com multi-tenancy completo, RBAC granular, Kanban, notifica\c{c}\~oes SSE em tempo real e uploads via Cloudflare R2. Stack: Fastify v5, React 19, Prisma, PostgreSQL, Redis. Mentoria de desenvolvedor j\'unior at\'e autonomia full stack.
+            \item \textbf{Selos Criptogr\'aficos (VPS):} Verifica\c{c}\~ao de confian\c{c}a para selos f\'isicos de amostras de combust\'ivel com assinaturas ECDSA, registro de chaves p\'ublicas e m\'aquina de estados do ciclo de vida do selo; 6 endpoints REST.
+            \item \textbf{Seguran\c{c}a e RBAC:} Corre\c{c}\~ao de 10+ vulnerabilidades de bypass cross-tenant em 12+ pap\'eis de usu\'ario; autentica\c{c}\~ao step-up em opera\c{c}\~oes sens\'iveis; logs de auditoria com hash encadeado.
+            \item \textbf{Intelig\^encia Financeira e DevOps com IA:} M\'odulo preditivo com Z-score e ETS para detec\c{c}\~ao de anomalias or\c{c}ament\'arias. Pipelines CI/CD com agentes de IA aut\^onomos para revis\~ao de c\'odigo, seguran\c{c}a (TruffleHog, CodeQL) e diagn\'ostico de falhas a cada commit.
+			\item \textbf{eBDN (Metanol, entregue):} Entrega completa da feature Terminal Role no sistema de Nota de Entrega de Bunker eletr\^onica, da arquitetura \`a aprova\c{c}\~ao em demo ao vivo com o cliente.
 		\end{highlights}
 	\end{onecolentry}
 
@@ -172,7 +173,7 @@ parsep=0.10 cm, partopsep=0pt, itemsep=0pt, leftmargin=10pt ] }{ \end{itemize} }
 	\vspace{0.10 cm}
 	\begin{onecolentry}
 		\begin{highlights}
-			\item \textbf{Automa\c{c}\~ao SAP (RPA):} Desenvolvimento de rob\^os em Python para automa\c{c}\~ao de 4--6 processos cr\'iticos di\'arios no SAP, reduzindo o tempo de execu\c{c}\~ao manual de 8 horas para 2 minutos.
+			\item \textbf{Automa\c{c}\~ao SAP (RPA):} Rob\^os em Python automatizando 6 processos cr\'iticos di\'arios no SAP, reduzindo o tempo de execu\c{c}\~ao de 8 horas para 2 minutos.
 			\item \textbf{Manuten\c{c}\~ao Preditiva:} Sistema em C\# para previs\~ao de paradas de m\'aquina com base em an\'alise de qualidade de produto, antecipando falhas cr\'iticas antes da ocorr\^encia.
             \item \textbf{Arquitetura Avan\c{c}ada:} Microsservi\c{c}os distribu\'idos (An\'alise de Imagem, Dados, BFF); pipelines CI/CD com IA para revis\~ao autom\'atica de c\'odigo e varredura de seguran\c{c}a; algoritmos Z-score e ETS para detec\c{c}\~ao autom\'atica de anomalias.
 		\end{highlights}
@@ -187,9 +188,9 @@ parsep=0.10 cm, partopsep=0pt, itemsep=0pt, leftmargin=10pt ] }{ \end{itemize} }
 	\vspace{0.10 cm}
 	\begin{onecolentry}
 		\begin{highlights}
-			\item \textbf{Engenharia de Campo \& Comissionamento:} Especialista em implementa\c{c}\~ao de ecossistemas \textbf{AVEVA System Platform}, desenvolvimento de interfaces \textbf{InTouch} e configura\c{c}\~ao de \textbf{Historian} em ambientes industriais cr\'iticos --- extensa atua\c{c}\~ao \textit{in loco}.
+			\item \textbf{Engenharia de Campo e Comissionamento:} Implementa\c{c}\~ao de ecossistemas \textbf{AVEVA System Platform}, interfaces \textbf{InTouch} e configura\c{c}\~ao de \textbf{Historian} em ambientes industriais cr\'iticos, com extensa atua\c{c}\~ao in loco.
             \item \textbf{Stack Industrial:} Projetos com PLCs Siemens (S7-1200/1500), Rockwell (Control/Compact/MicroLogix) e Schneider. Redes: Profinet, Ethernet/IP, Modbus, OPC. Workflows: \textbf{AVEVA WorkTasks}.
-            \item \textbf{Automa\c{c}\~ao de Dados \& Retrofit:} Scripts Python para atualiza\c{c}\~ao em massa de registros no AVEVA MES; migra\c{c}\~ao de legado (1995 $\rightarrow$ 2023) e retrofit por engenharia reversa; upgrade de 20+ servidores via ThinManager.
+            \item \textbf{Automa\c{c}\~ao de Dados e Retrofit:} Scripts Python para atualiza\c{c}\~ao em massa de registros no AVEVA MES; migra\c{c}\~ao de legado (1995 $\rightarrow$ 2023) e retrofit por engenharia reversa; upgrade de 20+ servidores via ThinManager.
 		\end{highlights}
 	\end{onecolentry}
 
@@ -202,7 +203,7 @@ parsep=0.10 cm, partopsep=0pt, itemsep=0pt, leftmargin=10pt ] }{ \end{itemize} }
 	\vspace{0.10 cm}
 	\begin{onecolentry}
 		\begin{highlights}
-			\item \textbf{Campe\~ao Estadual (S\~ao Paulo Skills):} Selecionado como \textbf{Melhor Aluno (Top 1)} do SENAI Roberto Simonsen para a equipe de elite; equipe sagrou-se \textbf{Campe\~a Estadual}. Rotina de 8--10h di\'arias de montagem de precis\~ao, programa\c{c}\~ao de PLCs (Siemens S7-1500), esta\c{c}\~oes Festo MPS e integra\c{c}\~ao Ind\'ustria 4.0 via IO-Link.
+			\item \textbf{WorldSkills (Mecatr\^onica):} Competidor pelo SENAI Roberto Simonsen na modalidade Mecatr\^onica. Rotina de 8--10h di\'arias de montagem de precis\~ao, programa\c{c}\~ao de PLCs (Siemens S7-1500), esta\c{c}\~oes Festo MPS e integra\c{c}\~ao Ind\'ustria 4.0 via IO-Link.
 		\end{highlights}
 	\end{onecolentry}
 
