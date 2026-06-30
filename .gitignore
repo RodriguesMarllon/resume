@@ -1,1 +1,14 @@
-resume.pdf
+# Compiled PDFs in src/ — snapshot to versions/ instead
+src/**/resume.pdf
+
+# LaTeX auxiliary files
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+
+# macOS
+.DS_Store

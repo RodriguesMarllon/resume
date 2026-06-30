@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jobstreet Copy Helper</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f0f2f5;
+      padding: 32px 24px;
+      color: #1a1a2e;
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #1a1a2e;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 32px;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #888;
+      margin-bottom: 12px;
+      margin-top: 28px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #e8eaed;
+      margin-bottom: 14px;
+      overflow: hidden;
+      transition: box-shadow 0.15s;
+    }
+
+    .card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px 10px;
+      border-bottom: 1px solid #f0f2f5;
+    }
+
+    .card-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+
+    .card-meta {
+      font-size: 11px;
+      color: #aaa;
+      margin-top: 2px;
+    }
+
+    .copy-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      background: #1a1a2e;
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .copy-btn:hover { background: #2d2d4e; }
+    .copy-btn:active { transform: scale(0.96); }
+
+    .copy-btn.copied {
+      background: #16a34a;
+    }
+
+    .card-body {
+      padding: 14px 18px;
+    }
+
+    pre {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 13px;
+      line-height: 1.65;
+      color: #374151;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #f0f2f5;
+      color: #666;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-right: 4px;
+      margin-top: 4px;
+    }
+
+    .divider-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 8px 0 4px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .divider-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e8eaed;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Jobstreet Copy Helper</h1>
+  <p class="subtitle">Click "Copy" on any block — text goes straight to your clipboard.</p>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section-title">Career History — Tyconnex / Schneider Electric</div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-label">Job Title</div>
+        <div class="card-meta">Paste into "Job title" field</div>
+      </div>
+      <button class="copy-btn" onclick="copyBlock(this, 'tyconnex-title')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </div>
+    <div class="card-body">
+      <pre id="tyconnex-title">Automation Analyst</pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-label">Company Name</div>
+        <div class="card-meta">Paste into "Company name" field</div>
+      </div>
+      <button class="copy-btn" onclick="copyBlock(this, 'tyconnex-company')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </div>
+    <div class="card-body">
+      <pre id="tyconnex-company">Tyconnex / Schneider Electric</pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-label">Description</div>
+        <div class="card-meta">Paste into "Description" field — Feb 2026 → Present</div>
+      </div>
+      <button class="copy-btn" onclick="copyBlock(this, 'tyconnex-desc')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </div>
+    <div class="card-body">
+      <pre id="tyconnex-desc">FPSO Commissioning — Petrobras P80 & P83 (Singapore, on-site):
+- Commissioned AVEVA Plant SCADA (Citect) on two identical offshore platforms — 50,000+ tags, 1,700+ field devices, Schneider M580 PLCs, 168 panels across 5 industrial subnets (MV 13.8kV, 6.6kV, LV, AUX, Multipurpose).
+- Commissioned and validated Danfoss VFDs (02A/02B/03A/03B) via Modbus TCP; diagnosed W1007/W1022 faults through live register-level analysis. Commissioned BT19 Ruhrpumpen MV 6.6kV block (SCADA read validated, write control complete).
+- Commissioned TG-5147001 A/B/C/D gas compressors via Modbus TCP over RTDS; resolved critical tag scaling fault (Eng Full = 10,000,000, divide-by-100). Configured and validated SEL protection relays (F650, 869, 845) via IEC 61850 MMS — 7,000+ signals catalogued across 105 IEDs.
+- Physical ESA network survey: 77 switch actions validated, 68 discrepancies identified across Hirschmann switches (TES001–TES027); rogue FMM devices flagged as P0.
+- Built TagFinder offline tool (single HTML, 4.58MB): 3,432 P80 + 1,785 P83 equipment records, Modbus tables, IEC 61850 catalog, IP mapping for 1,339 devices — used daily by field team.
+- Automated the Vendor Daily Report pipeline (Python + PyYAML + LaTeX + Docker); 27+ PDF reports generated, documenting 231 hours on-site.
+
+IEC 61850 / EPO Integration — SCANIA Substation (Brazil, remote):
+- Integrated SEL 2414 transformer relay into EcoStruxure Power Operation (EPO) v2022 via IEC 61850 MMS — SUB-88kV substation with ABB REF615 (MV 13.8kV, K1–K12) and ABB REF630 alarm annunciator.
+- Diagnosed and resolved URCB data_object_non_existent fault (indexed URCB suffix mismatch); implemented polling workaround to restore all analog tags to Good quality.
+- Fixed 24 IEC 61850 control address errors (RBGGIO to PRBGGIO prefix + Functional Constraint ST to CO) via Python script; corrected SCGGIO34 typo on TAP_3.
+- Built generate_io_devices.py for automated CSV generation of 8 IED device configurations for bulk EPO import.</pre>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section-title">Career History — Bunkerchain</div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-label">Job Title</div>
+        <div class="card-meta">Paste into "Job title" field</div>
+      </div>
+      <button class="copy-btn" onclick="copyBlock(this, 'bunker-title')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </div>
+    <div class="card-body">
+      <pre id="bunker-title">Full Stack Engineer</pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-label">Description</div>
+        <div class="card-meta">Paste into "Description" field — Jun 2025 → Present</div>
+      </div>
+      <button class="copy-btn" onclick="copyBlock(this, 'bunker-desc')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </div>
+    <div class="card-body">
+      <pre id="bunker-desc">eBDN Platform (Vue 2 / Vuex) — 266 commits, 13 PRs merged to production:
+- Built ~20 complex multi-section maritime forms for the Electronic Bunker Delivery Note platform: Global BDN suite (Sample Label, Stock Movement Logbook, Sounding Report, Safety Checklist, Transport Document, Bunker Declaration) and full Methanol suite (Planning Phase, Simops, Pre/Post Transfer, BRF dual-layout, Transfer Data, BDN Methanol).
+- Terminal Role (Methanol, delivered Apr 2026): new TerminalForm component (650 lines), offline token, email link registration, fuelTypeCode MMB support; delivered end-to-end from architecture to client demo approval.
+- Sanctioned Port compliance feature: UI alert + frontend validation for OFAC/sanctioned destinations across BDN, ChiefEngineerForm, PredeliveryTerms.
+
+Marine Vessel Pass — MVP 3.0 (TypeScript / Vue 3 / Flutter):
+- RBAC Security Hardening: identified and closed 11 cross-tenant authorization bypass vulnerabilities across 12+ user roles; enforced step-up authentication on all sensitive operations; hash-chained audit logs with global sequence integrity.
+- VPS Cryptographic Seal Verification: built backend for physical fuel sample anti-tampering — ECDSA signature verification, public key registry (VpsKey), seal lifecycle state machine (VpsSeal: AVAILABLE→CONSUMED), 7 REST endpoints, Prisma migration.
+- MFA/TOTP: full enroll→verify flow (QR generated client-side, no external service); server-side password strength validation.
+- Test Suite: created 17 integration test files (3,172 lines) from scratch covering all RBAC fixes. Flutter: fixed 6 QA bugs, wrote 45 tests.</pre>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section-title">Career History — MAIMA Technology</div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-label">Job Title</div>
+        <div class="card-meta">Paste into "Job title" field</div>
+      </div>
+      <button class="copy-btn" onclick="copyBlock(this, 'maima-title')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </div>
+    <div class="card-body">
+      <pre id="maima-title">Systems Developer</pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-label">Description</div>
+        <div class="card-meta">Paste into "Description" field — Aug 2024 → May 2025</div>
+      </div>
+      <button class="copy-btn" onclick="copyBlock(this, 'maima-desc')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </div>
+    <div class="card-body">
+      <pre id="maima-desc">SAP Automation (RPA):
+- Developed Python robots automating 4–6 critical daily SAP processes, reducing manual execution time from 8 hours to 2 minutes.
+
+Predictive Maintenance:
+- Built C# system for machine downtime prediction based on product quality analysis, anticipating critical failures before occurrence.
+
+Architecture & DevOps:
+- Distributed microservices architecture (Image Analysis, Data, BFF layers); AI-powered CI/CD pipelines with automated code review and security scanning on every commit.
+- Implemented Z-score and ETS time-series forecasting for automatic anomaly detection in production data.</pre>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section-title">Career History — S.Build Automation</div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-label">Job Title</div>
+        <div class="card-meta">Paste into "Job title" field</div>
+      </div>
+      <button class="copy-btn" onclick="copyBlock(this, 'sbuild-title')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </div>
+    <div class="card-body">
+      <pre id="sbuild-title">Automation Technician</pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-label">Description</div>
+        <div class="card-meta">Paste into "Description" field — Jun 2022 → Aug 2024</div>
+      </div>
+      <button class="copy-btn" onclick="copyBlock(this, 'sbuild-desc')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </div>
+    <div class="card-body">
+      <pre id="sbuild-desc">Field Engineering & Commissioning:
+- Implemented AVEVA System Platform ecosystems, InTouch HMI development, and Historian configuration in critical industrial environments — extensive on-site commissioning across multiple client sites.
+
+Industrial Stack:
+- Projects with Siemens PLCs (S7-1200/1500), Rockwell (ControlLogix/CompactLogix/MicroLogix), and Schneider Electric. Networks: Profinet, Ethernet/IP, Modbus TCP/RTU, OPC DA/UA. Workflow management via AVEVA WorkTasks.
+
+Data Automation & Retrofit:
+- Python scripts for mass SQL updates in AVEVA MES databases; legacy system migration (1995 → 2023) with reverse-engineering of undocumented machines; upgraded 20+ servers via ThinManager remote desktop infrastructure.</pre>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section-title">Education</div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-label">UNINTER</div>
+        <div class="card-meta">2023 – 2025</div>
+      </div>
+      <button class="copy-btn" onclick="copyBlock(this, 'edu-uninter')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </div>
+    <div class="card-body">
+      <pre id="edu-uninter">Systems Analysis and Development</pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-label">SENAI Roberto Simonsen — Computer Networks</div>
+        <div class="card-meta">2021 – 2022</div>
+      </div>
+      <button class="copy-btn" onclick="copyBlock(this, 'edu-senai-net')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </div>
+    <div class="card-body">
+      <pre id="edu-senai-net">Computer Networks Technician</pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-label">SENAI Roberto Simonsen — Electronics</div>
+        <div class="card-meta">2020 – 2022</div>
+      </div>
+      <button class="copy-btn" onclick="copyBlock(this, 'edu-senai-elec')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </div>
+    <div class="card-body">
+      <pre id="edu-senai-elec">Electronics Maintenance Electrician</pre>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="section-title">Licences & Certifications</div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-label">CSI AVEVA MES 2020</div>
+        <div class="card-meta">Certification name</div>
+      </div>
+      <button class="copy-btn" onclick="copyBlock(this, 'cert-aveva-mes')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </div>
+    <div class="card-body">
+      <pre id="cert-aveva-mes">CSI AVEVA Manufacturing Execution System (MES) 2020 — Operations & Performance Exams</pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-label">CSI AVEVA Application Server 2023</div>
+        <div class="card-meta">Certification name</div>
+      </div>
+      <button class="copy-btn" onclick="copyBlock(this, 'cert-aveva-app')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </div>
+    <div class="card-body">
+      <pre id="cert-aveva-app">CSI AVEVA Application Server 2023 Exam</pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-label">.NET Developer Bootcamp</div>
+        <div class="card-meta">DIO — 93h</div>
+      </div>
+      <button class="copy-btn" onclick="copyBlock(this, 'cert-dotnet')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </div>
+    <div class="card-body">
+      <pre id="cert-dotnet">.NET Developer Bootcamp — DIO (93h)</pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-label">Java OOP</div>
+        <div class="card-meta">Udemy — 54.5h</div>
+      </div>
+      <button class="copy-btn" onclick="copyBlock(this, 'cert-java')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </div>
+    <div class="card-body">
+      <pre id="cert-java">Java OOP — Udemy (54.5h)</pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-label">Node.js Fundamentals</div>
+        <div class="card-meta">DIO — 30h</div>
+      </div>
+      <button class="copy-btn" onclick="copyBlock(this, 'cert-nodejs')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </div>
+    <div class="card-body">
+      <pre id="cert-nodejs">Node.js Fundamentals — DIO (30h)</pre>
+    </div>
+  </div>
+
+  <script>
+    function copyBlock(btn, id) {
+      const text = document.getElementById(id).textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const original = btn.innerHTML;
+        btn.classList.add('copied');
+        btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = original;
+        }, 2000);
+      });
+    }
+  </script>
+
+</body>
+</html>

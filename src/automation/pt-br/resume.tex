@@ -79,7 +79,7 @@ parsep=0.10 cm, partopsep=0pt, itemsep=0pt, leftmargin=10pt ] }{ \end{itemize} }
 \begin{paracol}{2} }{ \switchcolumn \raggedleft \secondColumn \end{paracol}
 \endonecolentry } % new environment for two column entries
 
-\newenvironment{threecolentry}[3][]{ \onecolentry 
+\newenvironment{threecolentry}[3][]{ \onecolentry
 \def\thirdColumn{#3} \setcolumnwidth{, \fill, 4.5 cm}
 \begin{paracol}{3} {\raggedright #2} \switchcolumn }{ \switchcolumn \raggedleft \thirdColumn
 \end{paracol} \endonecolentry } % new environment for three column entries
@@ -92,7 +92,7 @@ parsep=0.10 cm, partopsep=0pt, itemsep=0pt, leftmargin=10pt ] }{ \end{itemize} }
 
 \newcommand{\placelastupdatedtext}{% \placetextbox{<horizontal pos>}{<vertical pos>}{<stuff>}
 \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
-\put( \LenToUnit{\paperwidth-2 cm-0 cm+0.05cm}, \LenToUnit{\paperheight-1.0 cm} ){\vtop{{\null}\makebox[0pt][c]{ \small\color{gray}\textit{Última atualização em Novembro de 2025}\hspace{\widthof{Última atualização em Novembro de 2025}} }}}%
+\put( \LenToUnit{\paperwidth-2 cm-0 cm+0.05cm}, \LenToUnit{\paperheight-1.0 cm} ){\vtop{{\null}\makebox[0pt][c]{ \small\color{gray}\textit{Última atualização em Maio de 2026}\hspace{\widthof{Última atualização em Maio de 2026}} }}}%
 }%
 }%
 
@@ -127,23 +127,23 @@ parsep=0.10 cm, partopsep=0pt, itemsep=0pt, leftmargin=10pt ] }{ \end{itemize} }
 
 	\section{Competências Técnicas}
 
-    \textbf{Desenvolvimento de Software:} Java, C\# (.NET), Python (FastAPI), Node.js (NestJS), TypeScript, Vue.js, React, Next.js, Prisma, Supabase, PostgreSQL, Docker, CI/CD (GitHub Actions), Git.
-    
-    \textbf{Automação Industrial:} PLC (Siemens S7-1200/1500, Rockwell Control/Compact/MicroLogix, Schneider), HMI/SCADA (AVEVA System Platform, InTouch, Historian, FactoryTalk), SQL Server, Redes Industriais, Integração IT/OT.
+    \textbf{Desenvolvimento de Software:} TypeScript, Node.js (Fastify, NestJS), Vue.js (Quasar), React, Next.js, Java, C\# (.NET), Python, Prisma, PostgreSQL, Redis, Cloudflare R2, Docker, CI/CD (GitHub Actions), SwiftUI, Git.
+
+    \textbf{Automação Industrial:} PLC (Siemens S7-1200/1500, Rockwell, Schneider M580), HMI/SCADA (AVEVA Plant SCADA/Citect, System Platform, InTouch, Historian, FactoryTalk, ISA-101), Relés SEL, IEC 61850, Modbus TCP, Redes Industriais, Integração IT/OT.
 
 	\section{Experiência}
-	
+
 	\begin{twocolentry}
-		{ Set 2025 - Atual } \textbf{Co-Founder \& Tech Lead}, Startup de Tecnologia (Em Desenvolvimento)
+		{ Set 2025 - Atual } \textbf{Co-Founder \& Tech Lead}, SIMP (Startup de Tecnologia Municipal)
 	\end{twocolentry}
-	
+
 	\vspace{0.10 cm}
 	\begin{onecolentry}
 		\begin{highlights}
-			\item \textbf{Liderança de Produto:} Arquitetura de dois produtos SaaS B2B/B2C: um ERP para Gestão Municipal (encaminhamentos, NF, agendas) e uma Plataforma Financeira 360º (Investimentos, Cripto e Sucessão Patrimonial).
-            \item \textbf{DevOps \& Qualidade:} Configuração de pipeline rigoroso de CI/CD (GitHub Actions) para deploy automatizado (Vercel/Render) com execução de testes (Jest) em cada Commit e Pull Request.
-            \item \textbf{Mentoria \& Capacitação:} Capacitação de desenvolvedor júnior, que evoluiu para uma atuação full stack autônoma na resolução de Issues e entrega de features após mentoria técnica intensiva.
-			\item \textbf{Stack Tecnológica:} Utilização de Next.js, NestJS, Prisma e Supabase para criar soluções escaláveis e de alta performance.
+			\item \textbf{SaaS Multi-tenant (SIMP):} Arquitetura e desenvolvimento de um ERP de gestão municipal B2B do zero — multi-tenancy completo, RBAC, Kanban, notificações SSE, uploads Cloudflare R2. Stack: Fastify v5, React 19, Prisma, PostgreSQL, Redis; deploy Vercel + Render.
+            \item \textbf{Inteligência Financeira:} Módulo de diagnóstico financeiro preditivo com Z-score e algoritmos de previsão ETS para detecção automática de anomalias em orçamentos municipais.
+            \item \textbf{DevOps com IA:} Pipelines CI/CD com agentes Claude AI autônomos para revisão de código, análise de segurança (TruffleHog, CodeQL) e diagnóstico de falhas em cada commit e Pull Request.
+			\item \textbf{Mentoria:} Capacitação de desenvolvedor júnior que evoluiu para atuação full stack autônoma, resolvendo issues e entregando features de forma independente.
 		\end{highlights}
 	\end{onecolentry}
 
@@ -152,46 +152,60 @@ parsep=0.10 cm, partopsep=0pt, itemsep=0pt, leftmargin=10pt ] }{ \end{itemize} }
     \begin{twocolentry}
 		{ Jun 2025 - Atual } \textbf{Desenvolvedor Full Stack}, Bunkerchain (Singapura/Remoto)
 	\end{twocolentry}
-	
+
 	\vspace{0.10 cm}
 	\begin{onecolentry}
 		\begin{highlights}
-            \item \textbf{Desenvolvimento de Produto (Touch and Sail):} Atuação no desenvolvimento do sistema "Touch and Sail" (e-BDN), uma solução de \textit{Digital Bunkering} para gestão de operações marítimas críticas em tempo real.
-			\item \textbf{Frontend Complexo (Vue.js):} Desenvolvimento diário de interfaces dinâmicas e formulários para inserção de dados operacionais, garantindo alta responsividade e visualização de dados em tempo real.
-            \item \textbf{Backend \& Integração:} Consumo intensivo de APIs Java e realização de manutenção corretiva (bug fix) no backend para assegurar a integridade dos dados e a comunicação fluida entre front e back.
-            \item \textbf{Processos Internacionais:} Participação ativa em rituais ágeis (Dailies, Demos) em inglês, suporte técnico direto a clientes internacionais e gestão de bugs/tickets via Mantis.
+			\item \textbf{Plataforma eBDN (Methanol):} Desenvolvimento full stack no sistema de Nota de Entrega de Bunker eletrônica da Bunkerchain para operações de carga de Metanol — ferramenta crítica de conformidade marítima usada em tempo real.
+            \item \textbf{Entrega de Feature (Quasar/Vue.js):} Desenvolvimento completo da funcionalidade Terminal Role — da arquitetura à aprovação em demo ao vivo com o cliente — habilitando terminais nos fluxos de digital bunkering.
+            \item \textbf{Backend \& Integração:} Manutenção corretiva e desenvolvimento de features em API Java, garantindo integridade dos dados em operações marítimas internacionais.
+            \item \textbf{Ambiente Internacional:} Colaboração diária em inglês com equipe em Singapura; suporte técnico direto a clientes internacionais e gestão de tickets via Mantis em rituais ágeis.
 		\end{highlights}
 	\end{onecolentry}
-	
+
 	\vspace{0.2 cm}
-	
+
+	\begin{twocolentry}
+		{ Fev 2026 - Atual } \textbf{Analista de Automação}, Tyconnex / Schneider Electric (Singapura)
+	\end{twocolentry}
+
+	\vspace{0.10 cm}
+	\begin{onecolentry}
+		\begin{highlights}
+			\item \textbf{Comissionamento FPSO (Petrobras):} Engenheiro de comissionamento \textit{in loco} dos sistemas AVEVA Plant SCADA (Citect) em duas plataformas offshore (P83 e P80) — 50.000+ tags, 1.700+ dispositivos de campo, PLCs Schneider M580.
+			\item \textbf{IEC 61850 \& Protocolos:} Configuração e validação de relés de proteção SEL (F650, 869, 845) e VFDs Danfoss via IEC 61850 MMS e Modbus TCP; mapeamento de sinais RTU e integração com lógica ESA.
+			\item \textbf{Integração EPO (Automotivo):} Comissionamento de relés de proteção SEL 2414 no AVEVA Power Operation (EPO) para planta automotiva no Brasil — configuração de dispositivos IEC 61850, endereçamento de tags e validação de polling.
+			\item \textbf{Ferramenta de Campo:} Desenvolvimento de aplicação web offline Tag Finder (HTML único, 4MB) consolidando dados do projeto SCADA para diagnóstico em campo em tempo real — cobrindo 5.000+ equipamentos nas duas plataformas.
+		\end{highlights}
+	\end{onecolentry}
+
+	\vspace{0.2 cm}
+
 	\begin{twocolentry}
 		{ Ago 2024 - Mai 2025 } \textbf{Desenvolvedor de Sistemas}, MAIMA Tecnologia
 	\end{twocolentry}
-	
+
 	\vspace{0.10 cm}
 	\begin{onecolentry}
 		\begin{highlights}
-            \item \textbf{Automação SAP (RPA):} Desenvolvimento de robôs em Python para automação de 4-6 processos críticos diários no SAP, reduzindo o tempo de execução manual de 8 horas para apenas 2 minutos.
-			\item \textbf{Manutenção Preditiva (Forecast):} Implementação de sistema em C\# para previsão de paradas de máquina com base na análise da qualidade do produto (cerdas dentais), antecipando falhas críticas.
-            \item \textbf{Arquitetura de Microsserviços:} Segregação de responsabilidades em microsserviços distribuídos (Análise de Imagem, Dados, BFF), garantindo escalabilidade e manutenção simplificada.
-            \item \textbf{Suporte \& Chatbot:} Contribuição no desenvolvimento de Chatbot com Adaptive Cards para suporte operacional ao sistema de qualidade.
+			\item \textbf{Automação SAP (RPA):} Desenvolvimento de robôs em Python para automação de 4--6 processos críticos diários no SAP, reduzindo o tempo de execução manual de 8 horas para 2 minutos.
+			\item \textbf{Manutenção Preditiva:} Sistema em C\# para previsão de paradas de máquina com base em análise de qualidade de produto (cerdas dentais), antecipando falhas críticas antes da ocorrência.
+            \item \textbf{Arquitetura de Microsserviços:} Segregação em microsserviços distribuídos (Análise de Imagem, Dados, BFF), garantindo escalabilidade e manutenção simplificada.
 		\end{highlights}
 	\end{onecolentry}
-	
+
 	\vspace{0.2 cm}
-	
+
 	\begin{twocolentry}
 		{ Jun 2022 - Ago 2024 } \textbf{Técnico em Automação}, S.Build Automação
 	\end{twocolentry}
-	
+
 	\vspace{0.10 cm}
 	\begin{onecolentry}
 		\begin{highlights}
-			\item \textbf{Automação de Dados (Python/MES):} Criação de scripts em Python para gerar Queries SQL dinâmicas, atualizando em massa milhares de registros no AVEVA MES, tarefa inviável manualmente.
-            \item \textbf{Engenharia de Campo \& Startups:} Atuação intensiva em viagens para comissionamento de obras \textit{in loco}. Especialista na implementação de ecossistemas \textbf{AVEVA System Platform}, desenvolvimento de interfaces \textbf{InTouch} e configuração de \textbf{Historian} em ambientes críticos.
-            \item \textbf{Tech Stack Industrial:} Projetos entregues com PLCs Siemens (S7-1200/1500), Rockwell (Control/Compact/MicroLogix) e Schneider. Configuração de redes (Profinet, Ethernet/IP, Modbus, OPC) e fluxos com \textbf{AVEVA WorkTasks}.
-            \item \textbf{Infraestrutura \& Retrofit:} Migração de legado (1995 $\rightarrow$ 2023) e retrofit de máquinas sem documentação (engenharia reversa). Upgrade de 20+ servidores e gestão via ThinManager.
+			\item \textbf{Engenharia de Campo \& Comissionamento:} Especialista em implementação de ecossistemas \textbf{AVEVA System Platform}, desenvolvimento de interfaces \textbf{InTouch} e configuração de \textbf{Historian} em ambientes industriais críticos.
+            \item \textbf{Stack Industrial:} Projetos com PLCs Siemens (S7-1200/1500), Rockwell (Control/Compact/MicroLogix) e Schneider. Redes: Profinet, Ethernet/IP, Modbus, OPC. Workflows: \textbf{AVEVA WorkTasks}.
+            \item \textbf{Automação de Dados \& Retrofit:} Scripts Python para atualização em massa de registros no AVEVA MES; migração de legado (1995 $\rightarrow$ 2023) e retrofit por engenharia reversa; upgrade de 20+ servidores via ThinManager.
 		\end{highlights}
 	\end{onecolentry}
 
@@ -200,33 +214,28 @@ parsep=0.10 cm, partopsep=0pt, itemsep=0pt, leftmargin=10pt ] }{ \end{itemize} }
     \begin{twocolentry}
 		{ Set 2021 - Fev 2023 } \textbf{Competidor WorldSkills (Mecatrônica)}, SENAI Roberto Simonsen
 	\end{twocolentry}
-	
+
 	\vspace{0.10 cm}
 	\begin{onecolentry}
 		\begin{highlights}
-            \item \textbf{Alta Performance \& Conquistas:} Selecionado como \textbf{Melhor Aluno (Top 1)} do SENAI Roberto Simonsen para compor a equipe de elite. A equipe sagrou-se \textbf{Campeã Estadual} (São Paulo Skills).
-            \item \textbf{Treinamento de Elite:} Rotina de 8-10 horas diárias focada em excelência operacional, montagem mecânica/elétrica de precisão e programação sob pressão de tempo.
-			\item \textbf{Tecnologia Festo MPS:} Montagem, comissionamento e programação de estações industriais complexas (\textit{Distributing, Sorting, Testing, Handling/Robot}), simulando processos reais de separação, medição e envase (Filling).
-            \item \textbf{Indústria 4.0:} Integração avançada de sensores inteligentes via \textbf{IO-Link} e redes industriais, garantindo comunicação eficiente entre sensores e PLCs Siemens S7-1500.
+			\item \textbf{Campeão Estadual (São Paulo Skills):} Selecionado como \textbf{Melhor Aluno (Top 1)} do SENAI Roberto Simonsen para a equipe de elite; equipe sagrou-se \textbf{Campeã Estadual}. Rotina de 8--10h diárias de montagem de precisão, programação de PLCs e estações Festo MPS sob pressão de competição.
 		\end{highlights}
 	\end{onecolentry}
-	
+
     \section{Certificações}
-    
+
     \begin{highlights}
         \item \textbf{CSI AVEVA} Manufacturing Execution System (MES) 2020 - Operations \& Performance Exams
         \item \textbf{CSI AVEVA} Application Server 2023 Exam
-        \item \textbf{Formação .NET Developer} (DIO - 93h)
-        \item \textbf{Java COMPLETO Programação Orientada a Objetos + Projetos} (Udemy - 54.5h)
-        \item \textbf{Formação Node.js Fundamentals} (DIO - 30h)
+        \item \textbf{Formação .NET Developer} (DIO - 93h) \quad \textbf{Java OOP} (Udemy - 54.5h) \quad \textbf{Node.js Fundamentals} (DIO - 30h)
     \end{highlights}
 
 	\section{Educação}
-	
+
 	\begin{twocolentry}
 		{2023 - 2025} \textbf{UNINTER}, Análise e Desenvolvimento de Sistemas
 	\end{twocolentry}
-	
+
 	\begin{twocolentry}
 		{2021 -  2022} \textbf{SENAI Roberto Simonsen}, Técnico em Redes de Computadores
 	\end{twocolentry}
@@ -234,14 +243,14 @@ parsep=0.10 cm, partopsep=0pt, itemsep=0pt, leftmargin=10pt ] }{ \end{itemize} }
     \begin{twocolentry}
 		{2020 -  2022} \textbf{SENAI Roberto Simonsen}, Eletricista de Manutenção Eletroeletrônica
 	\end{twocolentry}
-	
+
 	\section{Idiomas}
-	
+
 	\begin{onecolentry}
 		\begin{highlights}
 			\item Inglês (C1 - Avançado)
 			\item Português (Nativo)
 		\end{highlights}
 	\end{onecolentry}
-	
+
 \end{document}
