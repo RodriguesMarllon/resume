@@ -4,7 +4,7 @@
 **Empresa:** Gali
 **Localização:** Bauru - SP
 **Indicação:** Daniel Phelipe (Tyconnex)
-**Status:** 🟡 Em preparação
+**Status:** 🟢 Enviado
 
 ## Detalhes da Vaga
 
@@ -12,7 +12,7 @@
 
 ## Currículo Enviado
 
-- [ ] `versions/2026-06-30/automation_ptbr.pdf`
+- [x] `versions/2026-06-30/automation_ptbr.pdf` — enviado via Daniel Phelipe em 30/06/2026
 
 ## Notas
 
