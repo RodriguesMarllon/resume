@@ -12,3 +12,7 @@ src/**/resume.pdf
 
 # macOS
 .DS_Store
+
+# Tracker — built output and deps
+tracker/node_modules
+tracker/dist

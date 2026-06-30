@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Tracker</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #242736;
+    --border: #2e3145;
+    --accent: #6c72ff;
+    --accent2: #a78bfa;
+    --green: #22c55e;
+    --yellow: #eab308;
+    --orange: #f97316;
+    --red: #ef4444;
+    --blue: #3b82f6;
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --text3: #64748b;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* Layout */
+  .app { display: flex; flex-direction: column; height: 100vh; }
+  .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 20px; display: flex; align-items: center; gap: 20px; height: 52px; flex-shrink: 0; }
+  .topbar h1 { font-size: 16px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+  .topbar h1 span { color: var(--accent); }
+  .tabs { display: flex; gap: 2px; }
+  .tab { padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--text2); transition: all .15s; border: none; background: none; }
+  .tab:hover { background: var(--surface2); color: var(--text); }
+  .tab.active { background: var(--accent); color: #fff; }
+  .topbar-right { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+
+  .content { flex: 1; overflow: auto; padding: 20px; }
+
+  /* Cards */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .card + .card { margin-top: 12px; }
+
+  /* Grid */
+  .grid { display: grid; gap: 12px; }
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+  .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+  /* Stats bar */
+  .stats { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; min-width: 100px; }
+  .stat-value { font-size: 22px; font-weight: 700; }
+  .stat-label { font-size: 11px; color: var(--text2); margin-top: 2px; text-transform: uppercase; letter-spacing: .5px; }
+
+  /* Status badges */
+  .badge { display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; }
+  .badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .badge.prep { background: rgba(234,179,8,.15); color: var(--yellow); }
+  .badge.sent { background: rgba(59,130,246,.15); color: var(--blue); }
+  .badge.interview { background: rgba(168,139,250,.15); color: var(--accent2); }
+  .badge.offer { background: rgba(34,197,94,.15); color: var(--green); }
+  .badge.rejected { background: rgba(239,68,68,.1); color: var(--red); }
+  .badge.ghost { background: rgba(100,116,139,.1); color: var(--text3); }
+
+  /* Application cards */
+  .app-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; cursor: pointer; transition: all .15s; position: relative; }
+  .app-card:hover { border-color: var(--accent); background: var(--surface2); }
+  .app-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .app-card-title { font-size: 14px; font-weight: 600; }
+  .app-card-company { font-size: 13px; color: var(--text2); margin-top: 2px; }
+  .app-card-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 10px; }
+  .meta-tag { background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; font-size: 11px; color: var(--text2); }
+  .meta-tag.fit-high { border-color: rgba(34,197,94,.4); color: var(--green); background: rgba(34,197,94,.08); }
+  .app-card-actions { display: flex; gap: 6px; margin-top: 12px; }
+  .app-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
+
+  /* Forms */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); backdrop-filter: blur(3px); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; width: 100%; max-width: 640px; max-height: 90vh; overflow-y: auto; }
+  .modal-header { padding: 18px 20px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .modal-header h2 { font-size: 15px; font-weight: 600; }
+  .modal-body { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+  .modal-footer { padding: 14px 20px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px; }
+
+  label { font-size: 12px; font-weight: 600; color: var(--text2); display: block; margin-bottom: 5px; text-transform: uppercase; letter-spacing: .4px; }
+  input, select, textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; color: var(--text); font-size: 13px; font-family: inherit; transition: border .15s; outline: none; }
+  input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+  textarea { resize: vertical; min-height: 80px; }
+  select option { background: var(--surface2); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* Buttons */
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all .15s; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #7c82ff; }
+  .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-danger { background: rgba(239,68,68,.15); color: var(--red); border: 1px solid rgba(239,68,68,.3); }
+  .btn-danger:hover { background: rgba(239,68,68,.25); }
+  .btn-sm { padding: 4px 10px; font-size: 12px; }
+  .btn-icon { width: 28px; height: 28px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; background: var(--surface2); border: 1px solid var(--border); cursor: pointer; color: var(--text2); font-size: 14px; transition: all .15s; }
+  .btn-icon:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Detail view */
+  .detail-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .detail-top { padding: 20px; border-bottom: 1px solid var(--border); }
+  .detail-title { font-size: 18px; font-weight: 700; }
+  .detail-company { font-size: 14px; color: var(--text2); margin-top: 4px; }
+  .detail-body { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .detail-section h3 { font-size: 11px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
+  .detail-section p { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+  /* Keyword pills */
+  .pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pill { background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 3px 10px; font-size: 12px; color: var(--text2); }
+  .pill.match { border-color: rgba(34,197,94,.5); color: var(--green); background: rgba(34,197,94,.08); }
+
+  /* CV Fit Analyzer */
+  .fit-result { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .fit-result + .fit-result { margin-top: 8px; }
+  .fit-bar { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .fit-bar-fill { height: 100%; border-radius: 3px; transition: width .4s; }
+  .fit-score { font-size: 16px; font-weight: 700; min-width: 36px; text-align: right; }
+  .fit-name { font-size: 13px; font-weight: 600; min-width: 200px; }
+
+  /* Resumes tab */
+  .resume-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .resume-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .resume-card-title { font-weight: 600; font-size: 14px; }
+  .resume-lang { background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 1px 7px; font-size: 11px; font-weight: 600; color: var(--text2); }
+  .resume-type { color: var(--accent2); font-size: 12px; margin-top: 2px; }
+
+  /* Empty states */
+  .empty { text-align: center; padding: 48px 20px; color: var(--text3); }
+  .empty-icon { font-size: 36px; margin-bottom: 12px; }
+  .empty p { font-size: 13px; margin-top: 6px; }
+
+  /* Section header */
+  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .section-header h2 { font-size: 15px; font-weight: 700; }
+
+  /* Filter row */
+  .filter-row { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .filter-btn { padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; border: 1px solid var(--border); background: var(--surface); color: var(--text2); transition: all .15s; }
+  .filter-btn.active, .filter-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(108,114,255,.08); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* Fit badge */
+  .fit-badge { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+  .fit-badge.high { background: rgba(34,197,94,.15); color: var(--green); }
+  .fit-badge.medium { background: rgba(234,179,8,.15); color: var(--yellow); }
+  .fit-badge.low { background: rgba(239,68,68,.1); color: var(--red); }
+
+  .hidden { display: none !important; }
+  .flex { display: flex; }
+  .flex-col { flex-direction: column; }
+  .gap-2 { gap: 8px; }
+  .mt-1 { margin-top: 4px; }
+  .mt-2 { margin-top: 8px; }
+  .mt-3 { margin-top: 12px; }
+  .text-sm { font-size: 12px; }
+  .text-muted { color: var(--text2); }
+  .fw-600 { font-weight: 600; }
+  .separator { height: 1px; background: var(--border); margin: 4px 0; }
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- Topbar -->
+  <div class="topbar">
+    <h1><span>⚡</span> Job Tracker</h1>
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('applications')">Applications</button>
+      <button class="tab" onclick="showTab('analyzer')">CV Fit Analyzer</button>
+      <button class="tab" onclick="showTab('resumes')">Resumes</button>
+    </div>
+    <div class="topbar-right">
+      <button class="btn btn-primary" onclick="openAddModal()">+ Add Application</button>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <!-- ====== TAB: Applications ====== -->
+    <div id="tab-applications">
+      <!-- Stats -->
+      <div class="stats" id="stats-bar"></div>
+
+      <!-- Filters -->
+      <div class="filter-row" id="filter-row">
+        <button class="filter-btn active" data-filter="all" onclick="setFilter('all', this)">All</button>
+        <button class="filter-btn" data-filter="prep" onclick="setFilter('prep', this)">Preparing</button>
+        <button class="filter-btn" data-filter="sent" onclick="setFilter('sent', this)">Sent</button>
+        <button class="filter-btn" data-filter="interview" onclick="setFilter('interview', this)">Interview</button>
+        <button class="filter-btn" data-filter="offer" onclick="setFilter('offer', this)">Offer</button>
+        <button class="filter-btn" data-filter="rejected" onclick="setFilter('rejected', this)">Rejected</button>
+        <button class="filter-btn" data-filter="ghost" onclick="setFilter('ghost', this)">Ghost</button>
+        <input type="search" id="search-input" placeholder="Search..." style="max-width:180px; padding: 5px 10px;" oninput="renderCards()">
+      </div>
+
+      <div id="cards-container" class="app-cards-grid"></div>
+    </div>
+
+    <!-- ====== TAB: CV Fit Analyzer ====== -->
+    <div id="tab-analyzer" class="hidden">
+      <div class="section-header"><h2>CV Fit Analyzer</h2></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div>
+          <div class="card">
+            <label>Paste job description or keywords</label>
+            <textarea id="jd-input" rows="10" placeholder="Paste the full job description here... or just keywords like: React, Node.js, PostgreSQL, TypeScript, REST API"></textarea>
+            <button class="btn btn-primary mt-2" style="width:100%" onclick="analyzeJD()">Analyze Fit</button>
+          </div>
+        </div>
+        <div>
+          <div id="analyzer-results">
+            <div class="empty">
+              <div class="empty-icon">🎯</div>
+              <div class="fw-600">Paste a job description</div>
+              <p>I'll rank your resumes by keyword match</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== TAB: Resumes ====== -->
+    <div id="tab-resumes" class="hidden">
+      <div class="section-header">
+        <h2>Resume Library</h2>
+        <button class="btn btn-primary" onclick="openAddResumeModal()">+ Add Resume</button>
+      </div>
+      <div id="resumes-container" class="grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== Modal: Add/Edit Application ====== -->
+<div id="app-modal" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modal-title">Add Application</h2>
+      <button class="btn-icon" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div>
+          <label>Role / Position *</label>
+          <input id="f-role" type="text" placeholder="e.g. Full Stack Engineer">
+        </div>
+        <div>
+          <label>Company *</label>
+          <input id="f-company" type="text" placeholder="e.g. Pasona Singapore">
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label>Location</label>
+          <input id="f-location" type="text" placeholder="e.g. Singapore / Remote">
+        </div>
+        <div>
+          <label>Status</label>
+          <select id="f-status">
+            <option value="prep">Preparing</option>
+            <option value="sent">Sent</option>
+            <option value="interview">Interview</option>
+            <option value="offer">Offer</option>
+            <option value="rejected">Rejected</option>
+            <option value="ghost">Ghost</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label>Date Applied</label>
+          <input id="f-date" type="date">
+        </div>
+        <div>
+          <label>Salary / Compensation</label>
+          <input id="f-salary" type="text" placeholder="e.g. SGD $3,300–4,500/mo">
+        </div>
+      </div>
+      <div>
+        <label>Resume Sent</label>
+        <select id="f-resume">
+          <option value="">— Select resume —</option>
+        </select>
+      </div>
+      <div>
+        <label>Job Keywords (comma-separated)</label>
+        <input id="f-keywords" type="text" placeholder="React, Node.js, PostgreSQL, TypeScript, REST API">
+      </div>
+      <div>
+        <label>Strengths for this role</label>
+        <textarea id="f-strengths" rows="3" placeholder="Key points that make you a strong fit for this specific role..."></textarea>
+      </div>
+      <div>
+        <label>Notes / Next steps</label>
+        <textarea id="f-notes" rows="2" placeholder="Interview date, contact, follow-up..."></textarea>
+      </div>
+      <div>
+        <label>Job URL</label>
+        <input id="f-url" type="url" placeholder="https://...">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+      <button id="modal-delete-btn" class="btn btn-danger hidden" onclick="deleteCurrentApp()">Delete</button>
+      <button class="btn btn-primary" onclick="saveApp()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ====== Modal: Add/Edit Resume ====== -->
+<div id="resume-modal" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="resume-modal-title">Add Resume</h2>
+      <button class="btn-icon" onclick="closeResumeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div>
+          <label>Name *</label>
+          <input id="rf-name" type="text" placeholder="e.g. Full Stack EN">
+        </div>
+        <div>
+          <label>Title (headline)</label>
+          <input id="rf-title" type="text" placeholder="e.g. Full Stack Software Engineer">
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label>Type</label>
+          <select id="rf-type">
+            <option value="automation">Automation</option>
+            <option value="it">IT / Full Stack</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div>
+          <label>Language</label>
+          <select id="rf-lang">
+            <option value="en">English</option>
+            <option value="pt-br">Portuguese (PT-BR)</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label>File path</label>
+        <input id="rf-path" type="text" placeholder="e.g. versions/2026-06-30/it-fullstack_en.pdf">
+      </div>
+      <div>
+        <label>Keywords / Skills (comma-separated)</label>
+        <textarea id="rf-keywords" rows="4" placeholder="TypeScript, Node.js, React, Python, PostgreSQL, Prisma, Redis, Docker, CI/CD, GitHub Actions, REST API, Multi-tenant SaaS, RBAC, ECDSA, Z-score, ETS, SCADA, IEC 61850, Modbus, FPSO, automation"></textarea>
+        <p class="text-sm text-muted mt-1">These are matched against job descriptions in the Fit Analyzer</p>
+      </div>
+      <div>
+        <label>Notes</label>
+        <textarea id="rf-notes" rows="2" placeholder="When to use this resume, target roles..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeResumeModal()">Cancel</button>
+      <button id="resume-delete-btn" class="btn btn-danger hidden" onclick="deleteCurrentResume()">Delete</button>
+      <button class="btn btn-primary" onclick="saveResume()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ========================
+// DATA LAYER
+// ========================
+const STORAGE_KEYS = { apps: 'jt_applications', resumes: 'jt_resumes' };
+
+function load(key) {
+  try { return JSON.parse(localStorage.getItem(key)) || []; } catch { return []; }
+}
+function save(key, data) {
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
+let apps = load(STORAGE_KEYS.apps);
+let resumes = load(STORAGE_KEYS.resumes);
+let editingAppId = null;
+let editingResumeId = null;
+let currentFilter = 'all';
+
+// ========================
+// INIT: Seed default resumes if empty
+// ========================
+function init() {
+  if (resumes.length === 0) {
+    resumes = [
+      {
+        id: uid(),
+        name: 'Automation EN',
+        title: 'Automation & Control Systems Engineer',
+        type: 'automation',
+        lang: 'en',
+        path: 'versions/2026-06-30/automation_en.pdf',
+        keywords: 'IEC 61850, SCADA, AVEVA, Modbus, FPSO, Petrobras, SEL, HMI, PLC, commissioning, offshore, Python, TypeScript, TagFinder, RDO, automation, OT, industrial, Siemens, Rockwell, Schneider',
+        notes: 'Use for automation/industrial/offshore roles',
+        createdAt: new Date().toISOString()
+      },
+      {
+        id: uid(),
+        name: 'Automation PT-BR',
+        title: 'Engenheiro de Automação e Sistemas de Controle',
+        type: 'automation',
+        lang: 'pt-br',
+        path: 'versions/2026-06-30/automation_ptbr.pdf',
+        keywords: 'IEC 61850, SCADA, AVEVA, Modbus, FPSO, Petrobras, SEL, HMI, PLC, comissionamento, offshore, Python, TypeScript, automação, OT, industrial, Siemens, Rockwell, Schneider',
+        notes: 'Vagas de automação no Brasil ou em PT',
+        createdAt: new Date().toISOString()
+      },
+      {
+        id: uid(),
+        name: 'Full Stack EN',
+        title: 'Full Stack Software Engineer',
+        type: 'it',
+        lang: 'en',
+        path: 'versions/2026-06-30/it-fullstack_en.pdf',
+        keywords: 'TypeScript, Node.js, Fastify, Express, React, Vue.js, Python, PostgreSQL, Prisma, Redis, Docker, CI/CD, GitHub Actions, REST API, multi-tenant SaaS, RBAC, ECDSA, Z-score, ETS, Cloudflare R2, Vercel, Git, Full Stack',
+        notes: 'Use for IT/software/full-stack roles (EN)',
+        createdAt: new Date().toISOString()
+      }
+    ];
+    save(STORAGE_KEYS.resumes, resumes);
+  }
+
+  if (apps.length === 0) {
+    apps = [
+      {
+        id: uid(),
+        role: 'Automation Engineer',
+        company: 'Gali',
+        location: 'Bauru, Brazil',
+        status: 'sent',
+        date: '2026-06-30',
+        salary: '',
+        resumeId: resumes.find(r => r.name === 'Automation PT-BR')?.id || '',
+        keywords: 'automação, PLC, SCADA, industrial',
+        strengths: 'Experiência AVEVA + comissionamento offshore. Indicado por Daniel Phelipe.',
+        notes: 'Enviado via Daniel Phelipe em 30/06/2026. Aguardando retorno.',
+        url: '',
+        createdAt: new Date().toISOString()
+      },
+      {
+        id: uid(),
+        role: 'IT Developer (Full Stack) — HR Systems',
+        company: 'Pasona Singapore',
+        location: 'Tai Seng, Singapore',
+        status: 'prep',
+        date: '2026-06-30',
+        salary: 'SGD $3,300–$4,500/mo',
+        resumeId: resumes.find(r => r.name === 'Full Stack EN')?.id || '',
+        keywords: 'React, Python, PostgreSQL, Linux, Git, automation scripts, Cron jobs, dashboards, BI',
+        strengths: 'React ✅, Python ✅, PostgreSQL ✅, Git ✅, CI/CD ✅. Full lifecycle, Agile, independent work.',
+        notes: 'Pasona é agência de recrutamento japonesa. Perguntas: right to work in SG, expected salary, years full stack, frontend frameworks.',
+        url: '',
+        createdAt: new Date().toISOString()
+      }
+    ];
+    save(STORAGE_KEYS.apps, apps);
+  }
+
+  renderStats();
+  renderCards();
+  renderResumes();
+}
+
+// ========================
+// UTILS
+// ========================
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+
+const STATUS_CONFIG = {
+  prep:      { label: 'Preparing',  cls: 'prep',      color: 'var(--yellow)' },
+  sent:      { label: 'Sent',       cls: 'sent',      color: 'var(--blue)' },
+  interview: { label: 'Interview',  cls: 'interview', color: 'var(--accent2)' },
+  offer:     { label: 'Offer',      cls: 'offer',     color: 'var(--green)' },
+  rejected:  { label: 'Rejected',   cls: 'rejected',  color: 'var(--red)' },
+  ghost:     { label: 'Ghost',      cls: 'ghost',     color: 'var(--text3)' },
+};
+
+function statusBadge(s) {
+  const c = STATUS_CONFIG[s] || STATUS_CONFIG.prep;
+  return `<span class="badge ${c.cls}">${c.label}</span>`;
+}
+
+function formatDate(d) {
+  if (!d) return '';
+  try { return new Date(d + 'T12:00:00').toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' }); } catch { return d; }
+}
+
+// ========================
+// TABS
+// ========================
+function showTab(tab) {
+  ['applications', 'analyzer', 'resumes'].forEach(t => {
+    document.getElementById(`tab-${t}`).classList.toggle('hidden', t !== tab);
+  });
+  document.querySelectorAll('.tab').forEach((el, i) => {
+    el.classList.toggle('active', ['applications','analyzer','resumes'][i] === tab);
+  });
+}
+
+// ========================
+// STATS
+// ========================
+function renderStats() {
+  const counts = {};
+  Object.keys(STATUS_CONFIG).forEach(k => counts[k] = 0);
+  apps.forEach(a => { if (counts[a.status] !== undefined) counts[a.status]++; });
+
+  const bar = document.getElementById('stats-bar');
+  bar.innerHTML = `
+    <div class="stat"><div class="stat-value">${apps.length}</div><div class="stat-label">Total</div></div>
+    <div class="stat"><div class="stat-value" style="color:var(--blue)">${counts.sent}</div><div class="stat-label">Sent</div></div>
+    <div class="stat"><div class="stat-value" style="color:var(--accent2)">${counts.interview}</div><div class="stat-label">Interview</div></div>
+    <div class="stat"><div class="stat-value" style="color:var(--green)">${counts.offer}</div><div class="stat-label">Offer</div></div>
+    <div class="stat"><div class="stat-value" style="color:var(--red)">${counts.rejected}</div><div class="stat-label">Rejected</div></div>
+  `;
+}
+
+// ========================
+// APPLICATION CARDS
+// ========================
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b === btn));
+  renderCards();
+}
+
+function renderCards() {
+  const q = document.getElementById('search-input').value.toLowerCase();
+  let filtered = apps.filter(a => {
+    if (currentFilter !== 'all' && a.status !== currentFilter) return false;
+    if (q && !`${a.role} ${a.company} ${a.location} ${a.keywords}`.toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  // Sort: prep/sent first, then interview, then rest
+  const order = { prep:0, sent:1, interview:2, offer:3, rejected:4, ghost:5 };
+  filtered.sort((a,b) => (order[a.status]||9) - (order[b.status]||9) || (b.date||'').localeCompare(a.date||''));
+
+  const container = document.getElementById('cards-container');
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="empty" style="grid-column:1/-1"><div class="empty-icon">📋</div><div class="fw-600">No applications found</div><p>Click "+ Add Application" to get started</p></div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(a => {
+    const resume = resumes.find(r => r.id === a.resumeId);
+    const fit = resume ? calcFit(a.keywords, resume.keywords) : null;
+    return `
+    <div class="app-card" onclick="openEditModal('${a.id}')">
+      <div class="app-card-header">
+        <div>
+          <div class="app-card-title">${esc(a.role)}</div>
+          <div class="app-card-company">${esc(a.company)}${a.location ? ` · ${esc(a.location)}` : ''}</div>
+        </div>
+        ${statusBadge(a.status)}
+      </div>
+      ${a.strengths ? `<div class="text-sm text-muted" style="line-height:1.5;margin-top:4px">${esc(a.strengths).slice(0,120)}${a.strengths.length>120?'…':''}</div>` : ''}
+      <div class="app-card-meta">
+        ${a.date ? `<span class="meta-tag">📅 ${formatDate(a.date)}</span>` : ''}
+        ${a.salary ? `<span class="meta-tag">💰 ${esc(a.salary)}</span>` : ''}
+        ${resume ? `<span class="meta-tag ${fit && fit.score>=60?'fit-high':''}">📄 ${esc(resume.name)}${fit ? ` · ${fit.score}% fit` : ''}</span>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ========================
+// ADD / EDIT APPLICATION
+// ========================
+function populateResumeSelect(selectedId) {
+  const sel = document.getElementById('f-resume');
+  sel.innerHTML = '<option value="">— Select resume —</option>';
+  resumes.forEach(r => {
+    const opt = document.createElement('option');
+    opt.value = r.id;
+    opt.textContent = `${r.name} (${r.lang === 'pt-br' ? 'PT-BR' : r.lang.toUpperCase()})`;
+    if (r.id === selectedId) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+function openAddModal() {
+  editingAppId = null;
+  document.getElementById('modal-title').textContent = 'Add Application';
+  document.getElementById('f-role').value = '';
+  document.getElementById('f-company').value = '';
+  document.getElementById('f-location').value = '';
+  document.getElementById('f-status').value = 'prep';
+  document.getElementById('f-date').value = new Date().toISOString().slice(0,10);
+  document.getElementById('f-salary').value = '';
+  document.getElementById('f-keywords').value = '';
+  document.getElementById('f-strengths').value = '';
+  document.getElementById('f-notes').value = '';
+  document.getElementById('f-url').value = '';
+  document.getElementById('modal-delete-btn').classList.add('hidden');
+  populateResumeSelect('');
+  document.getElementById('app-modal').classList.remove('hidden');
+  document.getElementById('f-role').focus();
+}
+
+function openEditModal(id) {
+  const a = apps.find(x => x.id === id);
+  if (!a) return;
+  editingAppId = id;
+  document.getElementById('modal-title').textContent = 'Edit Application';
+  document.getElementById('f-role').value = a.role || '';
+  document.getElementById('f-company').value = a.company || '';
+  document.getElementById('f-location').value = a.location || '';
+  document.getElementById('f-status').value = a.status || 'prep';
+  document.getElementById('f-date').value = a.date || '';
+  document.getElementById('f-salary').value = a.salary || '';
+  document.getElementById('f-keywords').value = a.keywords || '';
+  document.getElementById('f-strengths').value = a.strengths || '';
+  document.getElementById('f-notes').value = a.notes || '';
+  document.getElementById('f-url').value = a.url || '';
+  document.getElementById('modal-delete-btn').classList.remove('hidden');
+  populateResumeSelect(a.resumeId || '');
+  document.getElementById('app-modal').classList.remove('hidden');
+}
+
+function closeModal() {
+  document.getElementById('app-modal').classList.add('hidden');
+  editingAppId = null;
+}
+
+function saveApp() {
+  const role = document.getElementById('f-role').value.trim();
+  const company = document.getElementById('f-company').value.trim();
+  if (!role || !company) { alert('Role and Company are required.'); return; }
+
+  const data = {
+    role, company,
+    location: document.getElementById('f-location').value.trim(),
+    status: document.getElementById('f-status').value,
+    date: document.getElementById('f-date').value,
+    salary: document.getElementById('f-salary').value.trim(),
+    resumeId: document.getElementById('f-resume').value,
+    keywords: document.getElementById('f-keywords').value.trim(),
+    strengths: document.getElementById('f-strengths').value.trim(),
+    notes: document.getElementById('f-notes').value.trim(),
+    url: document.getElementById('f-url').value.trim(),
+  };
+
+  if (editingAppId) {
+    const idx = apps.findIndex(a => a.id === editingAppId);
+    if (idx >= 0) apps[idx] = { ...apps[idx], ...data };
+  } else {
+    apps.push({ id: uid(), ...data, createdAt: new Date().toISOString() });
+  }
+
+  save(STORAGE_KEYS.apps, apps);
+  closeModal();
+  renderStats();
+  renderCards();
+}
+
+function deleteCurrentApp() {
+  if (!editingAppId) return;
+  if (!confirm('Delete this application?')) return;
+  apps = apps.filter(a => a.id !== editingAppId);
+  save(STORAGE_KEYS.apps, apps);
+  closeModal();
+  renderStats();
+  renderCards();
+}
+
+// ========================
+// CV FIT ANALYZER
+// ========================
+function tokenize(str) {
+  return str.toLowerCase()
+    .split(/[\s,;\/\.\(\)\[\]\+\-]+/)
+    .map(s => s.trim())
+    .filter(s => s.length >= 2);
+}
+
+function calcFit(jobKeywords, resumeKeywords) {
+  if (!jobKeywords || !resumeKeywords) return null;
+  const jTokens = tokenize(jobKeywords);
+  const rTokens = tokenize(resumeKeywords);
+  if (!jTokens.length) return null;
+
+  let matches = 0;
+  const matchedTerms = [];
+  jTokens.forEach(jt => {
+    if (rTokens.some(rt => rt.includes(jt) || jt.includes(rt))) {
+      matches++;
+      matchedTerms.push(jt);
+    }
+  });
+
+  const score = Math.round((matches / jTokens.length) * 100);
+  return { score, matches, total: jTokens.length, matchedTerms };
+}
+
+function analyzeJD() {
+  const jd = document.getElementById('jd-input').value.trim();
+  if (!jd) return;
+
+  if (resumes.length === 0) {
+    document.getElementById('analyzer-results').innerHTML = `<div class="empty"><div class="fw-600">No resumes yet</div><p>Add resumes in the Resumes tab first</p></div>`;
+    return;
+  }
+
+  const results = resumes.map(r => {
+    const fit = calcFit(jd, r.keywords) || { score: 0, matches: 0, total: 0, matchedTerms: [] };
+    return { resume: r, fit };
+  }).sort((a, b) => b.fit.score - a.fit.score);
+
+  const html = results.map(({ resume: r, fit }) => {
+    const color = fit.score >= 60 ? 'var(--green)' : fit.score >= 35 ? 'var(--yellow)' : 'var(--red)';
+    const cls = fit.score >= 60 ? 'high' : fit.score >= 35 ? 'medium' : 'low';
+    const matched = [...new Set(fit.matchedTerms)].slice(0, 10).map(t => `<span class="pill match">${t}</span>`).join('');
+    return `
+    <div class="card" style="margin-bottom:10px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div>
+          <span class="fw-600" style="font-size:14px">${esc(r.name)}</span>
+          <div class="text-sm text-muted mt-1">${esc(r.title || '')}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="fit-badge ${cls}">${fit.score}%</span>
+          <button class="btn btn-sm btn-primary" onclick="useResumeForApp('${r.id}', \`${esc(jd.slice(0,200))}\`)">Use this CV</button>
+        </div>
+      </div>
+      <div class="fit-bar" style="margin-bottom:8px"><div class="fit-bar-fill" style="width:${fit.score}%;background:${color}"></div></div>
+      <div class="pills">${matched}</div>
+      <div class="text-sm text-muted mt-1">${fit.matches} of ${fit.total} keywords matched</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('analyzer-results').innerHTML = html;
+}
+
+function useResumeForApp(resumeId, jdSnippet) {
+  showTab('applications');
+  openAddModal();
+  document.getElementById('f-resume').value = resumeId;
+  document.getElementById('f-keywords').value = jdSnippet;
+}
+
+// ========================
+// RESUMES
+// ========================
+function renderResumes() {
+  const container = document.getElementById('resumes-container');
+  if (resumes.length === 0) {
+    container.innerHTML = `<div class="empty"><div class="empty-icon">📄</div><div class="fw-600">No resumes yet</div><p>Add your resumes to use the Fit Analyzer</p></div>`;
+    return;
+  }
+
+  container.innerHTML = resumes.map(r => {
+    const usedIn = apps.filter(a => a.resumeId === r.id).length;
+    const pills = (r.keywords || '').split(',').slice(0, 10).map(k => `<span class="pill">${esc(k.trim())}</span>`).join('');
+    return `
+    <div class="resume-card">
+      <div class="resume-card-header">
+        <div>
+          <div class="resume-card-title">${esc(r.name)}</div>
+          <div class="resume-type">${esc(r.title || '')}</div>
+        </div>
+        <div style="display:flex;gap:6px;align-items:center">
+          <span class="resume-lang">${r.lang === 'pt-br' ? 'PT-BR' : (r.lang||'').toUpperCase()}</span>
+          <button class="btn-icon" onclick="openEditResumeModal('${r.id}')">✎</button>
+        </div>
+      </div>
+      <div class="pills mt-2">${pills}</div>
+      <div class="flex gap-2 mt-2" style="align-items:center">
+        <span class="text-sm text-muted">Used in ${usedIn} application${usedIn !== 1 ? 's' : ''}</span>
+        ${r.path ? `<span class="meta-tag" style="margin-left:auto">📁 ${esc(r.path)}</span>` : ''}
+      </div>
+      ${r.notes ? `<div class="text-sm text-muted mt-2" style="border-top:1px solid var(--border);padding-top:8px">${esc(r.notes)}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function openAddResumeModal() {
+  editingResumeId = null;
+  document.getElementById('resume-modal-title').textContent = 'Add Resume';
+  document.getElementById('rf-name').value = '';
+  document.getElementById('rf-title').value = '';
+  document.getElementById('rf-type').value = 'it';
+  document.getElementById('rf-lang').value = 'en';
+  document.getElementById('rf-path').value = '';
+  document.getElementById('rf-keywords').value = '';
+  document.getElementById('rf-notes').value = '';
+  document.getElementById('resume-delete-btn').classList.add('hidden');
+  document.getElementById('resume-modal').classList.remove('hidden');
+}
+
+function openEditResumeModal(id) {
+  const r = resumes.find(x => x.id === id);
+  if (!r) return;
+  editingResumeId = id;
+  document.getElementById('resume-modal-title').textContent = 'Edit Resume';
+  document.getElementById('rf-name').value = r.name || '';
+  document.getElementById('rf-title').value = r.title || '';
+  document.getElementById('rf-type').value = r.type || 'it';
+  document.getElementById('rf-lang').value = r.lang || 'en';
+  document.getElementById('rf-path').value = r.path || '';
+  document.getElementById('rf-keywords').value = r.keywords || '';
+  document.getElementById('rf-notes').value = r.notes || '';
+  document.getElementById('resume-delete-btn').classList.remove('hidden');
+  document.getElementById('resume-modal').classList.remove('hidden');
+}
+
+function closeResumeModal() {
+  document.getElementById('resume-modal').classList.add('hidden');
+  editingResumeId = null;
+}
+
+function saveResume() {
+  const name = document.getElementById('rf-name').value.trim();
+  if (!name) { alert('Name is required.'); return; }
+
+  const data = {
+    name,
+    title: document.getElementById('rf-title').value.trim(),
+    type: document.getElementById('rf-type').value,
+    lang: document.getElementById('rf-lang').value,
+    path: document.getElementById('rf-path').value.trim(),
+    keywords: document.getElementById('rf-keywords').value.trim(),
+    notes: document.getElementById('rf-notes').value.trim(),
+  };
+
+  if (editingResumeId) {
+    const idx = resumes.findIndex(r => r.id === editingResumeId);
+    if (idx >= 0) resumes[idx] = { ...resumes[idx], ...data };
+  } else {
+    resumes.push({ id: uid(), ...data, createdAt: new Date().toISOString() });
+  }
+
+  save(STORAGE_KEYS.resumes, resumes);
+  closeResumeModal();
+  renderResumes();
+}
+
+function deleteCurrentResume() {
+  if (!editingResumeId) return;
+  if (!confirm('Delete this resume?')) return;
+  resumes = resumes.filter(r => r.id !== editingResumeId);
+  save(STORAGE_KEYS.resumes, resumes);
+  closeResumeModal();
+  renderResumes();
+}
+
+// ========================
+// UTILS
+// ========================
+function esc(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Close modals on overlay click
+document.getElementById('app-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.getElementById('resume-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeResumeModal();
+});
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeResumeModal(); }
+});
+
+// ========================
+// START
+// ========================
+init();
+</script>
+</body>
+</html>
