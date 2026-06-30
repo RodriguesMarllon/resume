@@ -26,7 +26,6 @@
 \usepackage[pscoord]{eso-pic} % for floating text on the page
 \usepackage{calc} % for calculating lengths
 \usepackage{bookmark} % for bookmarks
-\usepackage{lastpage} % for getting the total number of pages
 \usepackage{changepage} % for one column entries (adjustwidth environment)
 \usepackage{paracol} % for two and three column entries
 \usepackage{needspace} % for avoiding page brake right after the section title
@@ -92,14 +91,12 @@ parsep=0.10 cm, partopsep=0pt, itemsep=0pt, leftmargin=10pt ] }{ \end{itemize} }
 
 \newcommand{\placelastupdatedtext}{% \placetextbox{<horizontal pos>}{<vertical pos>}{<stuff>}
 \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
-\put( \LenToUnit{\paperwidth-2 cm-0 cm+0.05cm}, \LenToUnit{\paperheight-1.0 cm} ){\vtop{{\null}\makebox[0pt][c]{ \small\color{gray}\textit{Última atualização em Maio de 2026}\hspace{\widthof{Última atualização em Maio de 2026}} }}}%
+\put( \LenToUnit{\paperwidth-2 cm-0 cm+0.05cm}, \LenToUnit{\paperheight-1.0 cm} ){\vtop{{\null}\makebox[0pt][c]{ \small\color{gray}\textit{\'Ultima atualiza\c{c}\~ao em Junho de 2026}\hspace{\widthof{\'Ultima atualiza\c{c}\~ao em Junho de 2026}} }}}%
 }%
 }%
 
 % save the original href command in a new command:
 \let\hrefWithoutArrow\href
-
-% new command for external links:
 
 \begin{document}
 	\newcommand{\AND}{\unskip \cleaders\copy\ANDbox\hskip\wd\ANDbox \ignorespaces }
@@ -109,7 +106,7 @@ parsep=0.10 cm, partopsep=0pt, itemsep=0pt, leftmargin=10pt ] }{ \end{itemize} }
 	\begin{header}
 		\fontsize{25 pt}{25 pt}\selectfont Marllon Rodrigues
 
-        \fontsize{18 pt}{18 pt}\selectfont Engenheiro de Software \& Automação
+        \fontsize{18 pt}{18 pt}\selectfont Engenheiro de Automa\c{c}\~ao e Sistemas de Controle
 
 		\vspace{5 pt}
 
@@ -120,136 +117,123 @@ parsep=0.10 cm, partopsep=0pt, itemsep=0pt, leftmargin=10pt ] }{ \end{itemize} }
 		\kern 5.0 pt%
 		\mbox{\hrefWithoutArrow{https://linkedin.com/in/rodriguesmarllon}{linkedin.com/in/rodriguesmarllon}}%
 		\kern 5.0 pt%
-        \AND%
+		\AND%
 		\kern 5.0 pt%
 		\mbox{\hrefWithoutArrow{https://github.com/rodriguesmarllon}{github.com/rodriguesmarllon}}%
 	\end{header}
 
-	\section{Competências Técnicas}
+	\section{Compet\^encias T\'ecnicas}
 
-    \textbf{Desenvolvimento de Software:} TypeScript, Node.js (Fastify, NestJS), Vue.js (Quasar), React, Next.js, Java, C\# (.NET), Python, Prisma, PostgreSQL, Redis, Cloudflare R2, Docker, CI/CD (GitHub Actions), SwiftUI, Git.
+    \textbf{Automa\c{c}\~ao Industrial:} AVEVA Plant SCADA (Citect), System Platform, InTouch, Historian, Power Operation (EPO), MES, FactoryTalk, ISA-101, Rel\'es SEL (F650, 869, 845), VFDs Danfoss, PLCs Schneider M580, Siemens S7-1200/1500, Rockwell (Control/Compact/MicroLogix), IEC 61850 MMS, Modbus TCP, Profinet, Ethernet/IP, OPC, Sistemas FPSO, Integra\c{c}\~ao IT/OT.
 
-    \textbf{Automação Industrial:} PLC (Siemens S7-1200/1500, Rockwell, Schneider M580), HMI/SCADA (AVEVA Plant SCADA/Citect, System Platform, InTouch, Historian, FactoryTalk, ISA-101), Relés SEL, IEC 61850, Modbus TCP, Redes Industriais, Integração IT/OT.
+    \textbf{Software \& Ferramentas:} Python, TypeScript, Node.js, PostgreSQL, Docker, CI/CD (GitHub Actions), C\# (.NET), Git, Prisma.
 
-	\section{Experiência}
+	\section{Experi\^encia}
 
 	\begin{twocolentry}
-		{ Set 2025 - Atual } \textbf{Co-Founder \& Tech Lead}, SIMP (Startup de Tecnologia Municipal)
+		{ Fev 2026 -- Atual } \textbf{Analista de Automa\c{c}\~ao}, Tyconnex
 	\end{twocolentry}
 
 	\vspace{0.10 cm}
 	\begin{onecolentry}
 		\begin{highlights}
-			\item \textbf{SaaS Multi-tenant (SIMP):} Arquitetura e desenvolvimento de um ERP de gestão municipal B2B do zero — multi-tenancy completo, RBAC, Kanban, notificações SSE, uploads Cloudflare R2. Stack: Fastify v5, React 19, Prisma, PostgreSQL, Redis; deploy Vercel + Render.
-            \item \textbf{Inteligência Financeira:} Módulo de diagnóstico financeiro preditivo com Z-score e algoritmos de previsão ETS para detecção automática de anomalias em orçamentos municipais.
-            \item \textbf{DevOps com IA:} Pipelines CI/CD com agentes Claude AI autônomos para revisão de código, análise de segurança (TruffleHog, CodeQL) e diagnóstico de falhas em cada commit e Pull Request.
-			\item \textbf{Mentoria:} Capacitação de desenvolvedor júnior que evoluiu para atuação full stack autônoma, resolvendo issues e entregando features de forma independente.
+			\item \textbf{Comissionamento FPSO (Petrobras P80/P83):} Engenheiro de comissionamento \textit{in loco} do AVEVA Plant SCADA (Citect) em duas plataformas offshore id\^enticas --- 50.000+ tags, 1.700+ dispositivos de campo, PLCs Schneider M580, 168 pain\'eis em 5 subredes industriais (MV 13,8kV, 6,6kV, BT, AUX, MULTIPROPOSITO).
+            \item \textbf{Integra\c{c}\~ao e Diagn\'ostico de VFDs:} Comissionamento e valida\c{c}\~ao de VFDs Danfoss (02A/02B/03A/03B) via Modbus TCP; diagn\'ostico de falhas W1007/W1022 por an\'alise ao vivo de registros. Comissionamento do bloco BT19 Ruhrpumpen MV 6,6kV (SCADA\_READ validado, controle de escrita completo).
+            \item \textbf{TGCP \& IEC 61850:} Comissionamento dos compressores de g\'as TG-5147001 A/B/C/D via Modbus TCP sobre RTDS; resolu\c{c}\~ao de falha cr\'itica de scaling de tag (Eng Full = 10.000.000, fator $\div$100 no TG02). Configura\c{c}\~ao e valida\c{c}\~ao de rel\'es SEL (F650, 869, 845) via IEC 61850 MMS --- 7.000+ sinais catalogados em 105 IEDs.
+			\item \textbf{Auditoria de Rede ESA:} Levantamento f\'isico de 77 a\c{c}\~oes de switch validadas; identificadas e reconciliadas 68 discrepâncias em switches Hirschmann (TES001--TES027) incluindo dispositivos rogue FMM sinalizados como P0.
+            \item \textbf{Ferramenta de Campo:} Desenvolvimento de aplica\c{c}\~ao offline TagFinder (HTML \'unico, 4,58MB) --- 3.432 registros P80 + 1.785 P83 em 168 pain\'eis, tabelas de endere\c{c}amento Modbus, cat\'alogo IEC 61850, mapeamento IP de 1.339 dispositivos; utilizado diariamente pela equipe de campo.
+            \item \textbf{Gerador de RDO:} Pipeline automatizado de Relat\'orio Di\'ario de Opera\c{c}\~oes (Python + PyYAML + LaTeX + Docker); 27+ relat\'orios PDF gerados, documentando 231 horas de comissionamento \textit{in loco}.
 		\end{highlights}
 	\end{onecolentry}
 
     \vspace{0.2 cm}
 
     \begin{twocolentry}
-		{ Jun 2025 - Atual } \textbf{Desenvolvedor Full Stack}, Bunkerchain (Singapura/Remoto)
+		{ Jun 2025 -- Atual } \textbf{Desenvolvedor Full Stack}, Bunkerchain \textit{(Singapura/Remoto)}
 	\end{twocolentry}
 
 	\vspace{0.10 cm}
 	\begin{onecolentry}
 		\begin{highlights}
-			\item \textbf{Plataforma eBDN (Methanol):} Desenvolvimento full stack no sistema de Nota de Entrega de Bunker eletrônica da Bunkerchain para operações de carga de Metanol — ferramenta crítica de conformidade marítima usada em tempo real.
-            \item \textbf{Entrega de Feature (Quasar/Vue.js):} Desenvolvimento completo da funcionalidade Terminal Role — da arquitetura à aprovação em demo ao vivo com o cliente — habilitando terminais nos fluxos de digital bunkering.
-            \item \textbf{Backend \& Integração:} Manutenção corretiva e desenvolvimento de features em API Java, garantindo integridade dos dados em operações marítimas internacionais.
-            \item \textbf{Ambiente Internacional:} Colaboração diária em inglês com equipe em Singapura; suporte técnico direto a clientes internacionais e gestão de tickets via Mantis em rituais ágeis.
+			\item \textbf{Plataforma Mar\'itima (MVP 3.0):} Desenvolvimento full stack no Marine Vessel Pass --- Camada de Identidade Portu\'aria para navega\c{c}\~ao internacional cobrindo onboarding de embarca\c{c}\~oes, chamadas em porto, abastecimento e conformidade digital; ciclo de vida FSM com bloqueios regulat\'orios e fluxos multi-assinatura.
+            \item \textbf{Verifica\c{c}\~ao de Selos Criptogr\'aficos (VPS):} Projetou e desenvolveu sistema de verifica\c{c}\~ao de confian\c{c}a para selos f\'isicos de amostras de combust\'ivel --- assinaturas digitais ECDSA, registro de chaves p\'ublicas, m\'aquina de estados do ciclo de vida do selo, 6 endpoints REST.
+            \item \textbf{Hardening de Seguran\c{c}a (RBAC):} Fechou 10+ vulnerabilidades de bypass cross-tenant em 12+ pap\'eis de usu\'ario; autentica\c{c}\~ao step-up em opera\c{c}\~oes sens\'iveis; logs de auditoria com hash encadeado.
+            \item \textbf{Sistema de Identidade de Surveyor:} Papel de Surveyor Licenciado com perfil, gerenciamento de dispositivos e UI de roster; 186+ testes automatizados para cobertura completa de RBAC.
+			\item \textbf{Plataforma eBDN (Metanol, entregue):} Entrega end-to-end da feature Terminal Role no sistema de Nota de Entrega de Bunker eletr\^onica --- da arquitetura \`a aprova\c{c}\~ao em demo ao vivo com o cliente.
 		\end{highlights}
 	\end{onecolentry}
 
 	\vspace{0.2 cm}
 
 	\begin{twocolentry}
-		{ Fev 2026 - Atual } \textbf{Analista de Automação}, Tyconnex / Schneider Electric (Singapura)
+		{ Ago 2024 -- Mai 2025 } \textbf{Desenvolvedor de Sistemas}, MAIMA Tecnologia
 	\end{twocolentry}
 
 	\vspace{0.10 cm}
 	\begin{onecolentry}
 		\begin{highlights}
-			\item \textbf{Comissionamento FPSO (Petrobras):} Engenheiro de comissionamento \textit{in loco} dos sistemas AVEVA Plant SCADA (Citect) em duas plataformas offshore (P83 e P80) — 50.000+ tags, 1.700+ dispositivos de campo, PLCs Schneider M580.
-			\item \textbf{IEC 61850 \& Protocolos:} Configuração e validação de relés de proteção SEL (F650, 869, 845) e VFDs Danfoss via IEC 61850 MMS e Modbus TCP; mapeamento de sinais RTU e integração com lógica ESA.
-			\item \textbf{Integração EPO (Automotivo):} Comissionamento de relés de proteção SEL 2414 no AVEVA Power Operation (EPO) para planta automotiva no Brasil — configuração de dispositivos IEC 61850, endereçamento de tags e validação de polling.
-			\item \textbf{Ferramenta de Campo:} Desenvolvimento de aplicação web offline Tag Finder (HTML único, 4MB) consolidando dados do projeto SCADA para diagnóstico em campo em tempo real — cobrindo 5.000+ equipamentos nas duas plataformas.
+			\item \textbf{Automa\c{c}\~ao SAP (RPA):} Desenvolvimento de rob\^os em Python para automa\c{c}\~ao de 4--6 processos cr\'iticos di\'arios no SAP, reduzindo o tempo de execu\c{c}\~ao manual de 8 horas para 2 minutos.
+			\item \textbf{Manuten\c{c}\~ao Preditiva:} Sistema em C\# para previs\~ao de paradas de m\'aquina com base em an\'alise de qualidade de produto, antecipando falhas cr\'iticas antes da ocorr\^encia.
+            \item \textbf{Arquitetura Avan\c{c}ada:} Microsservi\c{c}os distribu\'idos (An\'alise de Imagem, Dados, BFF); pipelines CI/CD com IA para revis\~ao autom\'atica de c\'odigo e varredura de seguran\c{c}a; algoritmos Z-score e ETS para detec\c{c}\~ao autom\'atica de anomalias.
 		\end{highlights}
 	\end{onecolentry}
 
 	\vspace{0.2 cm}
 
 	\begin{twocolentry}
-		{ Ago 2024 - Mai 2025 } \textbf{Desenvolvedor de Sistemas}, MAIMA Tecnologia
+		{ Jun 2022 -- Ago 2024 } \textbf{T\'ecnico em Automa\c{c}\~ao}, S.Build Automa\c{c}\~ao
 	\end{twocolentry}
 
 	\vspace{0.10 cm}
 	\begin{onecolentry}
 		\begin{highlights}
-			\item \textbf{Automação SAP (RPA):} Desenvolvimento de robôs em Python para automação de 4--6 processos críticos diários no SAP, reduzindo o tempo de execução manual de 8 horas para 2 minutos.
-			\item \textbf{Manutenção Preditiva:} Sistema em C\# para previsão de paradas de máquina com base em análise de qualidade de produto (cerdas dentais), antecipando falhas críticas antes da ocorrência.
-            \item \textbf{Arquitetura de Microsserviços:} Segregação em microsserviços distribuídos (Análise de Imagem, Dados, BFF), garantindo escalabilidade e manutenção simplificada.
-		\end{highlights}
-	\end{onecolentry}
-
-	\vspace{0.2 cm}
-
-	\begin{twocolentry}
-		{ Jun 2022 - Ago 2024 } \textbf{Técnico em Automação}, S.Build Automação
-	\end{twocolentry}
-
-	\vspace{0.10 cm}
-	\begin{onecolentry}
-		\begin{highlights}
-			\item \textbf{Engenharia de Campo \& Comissionamento:} Especialista em implementação de ecossistemas \textbf{AVEVA System Platform}, desenvolvimento de interfaces \textbf{InTouch} e configuração de \textbf{Historian} em ambientes industriais críticos.
+			\item \textbf{Engenharia de Campo \& Comissionamento:} Especialista em implementa\c{c}\~ao de ecossistemas \textbf{AVEVA System Platform}, desenvolvimento de interfaces \textbf{InTouch} e configura\c{c}\~ao de \textbf{Historian} em ambientes industriais cr\'iticos --- extensa atua\c{c}\~ao \textit{in loco}.
             \item \textbf{Stack Industrial:} Projetos com PLCs Siemens (S7-1200/1500), Rockwell (Control/Compact/MicroLogix) e Schneider. Redes: Profinet, Ethernet/IP, Modbus, OPC. Workflows: \textbf{AVEVA WorkTasks}.
-            \item \textbf{Automação de Dados \& Retrofit:} Scripts Python para atualização em massa de registros no AVEVA MES; migração de legado (1995 $\rightarrow$ 2023) e retrofit por engenharia reversa; upgrade de 20+ servidores via ThinManager.
+            \item \textbf{Automa\c{c}\~ao de Dados \& Retrofit:} Scripts Python para atualiza\c{c}\~ao em massa de registros no AVEVA MES; migra\c{c}\~ao de legado (1995 $\rightarrow$ 2023) e retrofit por engenharia reversa; upgrade de 20+ servidores via ThinManager.
 		\end{highlights}
 	\end{onecolentry}
 
     \vspace{0.2 cm}
 
     \begin{twocolentry}
-		{ Set 2021 - Fev 2023 } \textbf{Competidor WorldSkills (Mecatrônica)}, SENAI Roberto Simonsen
+		{ Set 2021 -- Fev 2023 } \textbf{Competidor WorldSkills (Mecatr\^onica)}, SENAI Roberto Simonsen
 	\end{twocolentry}
 
 	\vspace{0.10 cm}
 	\begin{onecolentry}
 		\begin{highlights}
-			\item \textbf{Campeão Estadual (São Paulo Skills):} Selecionado como \textbf{Melhor Aluno (Top 1)} do SENAI Roberto Simonsen para a equipe de elite; equipe sagrou-se \textbf{Campeã Estadual}. Rotina de 8--10h diárias de montagem de precisão, programação de PLCs e estações Festo MPS sob pressão de competição.
+			\item \textbf{Campe\~ao Estadual (S\~ao Paulo Skills):} Selecionado como \textbf{Melhor Aluno (Top 1)} do SENAI Roberto Simonsen para a equipe de elite; equipe sagrou-se \textbf{Campe\~a Estadual}. Rotina de 8--10h di\'arias de montagem de precis\~ao, programa\c{c}\~ao de PLCs (Siemens S7-1500), esta\c{c}\~oes Festo MPS e integra\c{c}\~ao Ind\'ustria 4.0 via IO-Link.
 		\end{highlights}
 	\end{onecolentry}
 
-    \section{Certificações}
+    \section{Certifica\c{c}\~oes}
 
     \begin{highlights}
-        \item \textbf{CSI AVEVA} Manufacturing Execution System (MES) 2020 - Operations \& Performance Exams
+        \item \textbf{CSI AVEVA} Manufacturing Execution System (MES) 2020 -- Operations \& Performance Exams
         \item \textbf{CSI AVEVA} Application Server 2023 Exam
-        \item \textbf{Formação .NET Developer} (DIO - 93h) \quad \textbf{Java OOP} (Udemy - 54.5h) \quad \textbf{Node.js Fundamentals} (DIO - 30h)
+        \item \textbf{Forma\c{c}\~ao .NET Developer} (DIO -- 93h) \quad \textbf{Java OOP} (Udemy -- 54,5h) \quad \textbf{Node.js Fundamentals} (DIO -- 30h)
     \end{highlights}
 
-	\section{Educação}
+	\section{Educa\c{c}\~ao}
 
 	\begin{twocolentry}
-		{2023 - 2025} \textbf{UNINTER}, Análise e Desenvolvimento de Sistemas
+		{2023 -- 2025} \textbf{UNINTER}, An\'alise e Desenvolvimento de Sistemas
 	\end{twocolentry}
 
 	\begin{twocolentry}
-		{2021 -  2022} \textbf{SENAI Roberto Simonsen}, Técnico em Redes de Computadores
+		{2021 -- 2022} \textbf{SENAI Roberto Simonsen}, T\'ecnico em Redes de Computadores
 	\end{twocolentry}
 
     \begin{twocolentry}
-		{2020 -  2022} \textbf{SENAI Roberto Simonsen}, Eletricista de Manutenção Eletroeletrônica
+		{2020 -- 2022} \textbf{SENAI Roberto Simonsen}, Eletricista de Manuten\c{c}\~ao Eletroeletr\^onica
 	\end{twocolentry}
 
 	\section{Idiomas}
 
 	\begin{onecolentry}
 		\begin{highlights}
-			\item Inglês (C1 - Avançado)
-			\item Português (Nativo)
+			\item Ingl\^es (C1 -- Avan\c{c}ado)
+			\item Portugu\^es (Nativo)
 		\end{highlights}
 	\end{onecolentry}
 
