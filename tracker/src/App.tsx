@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { Application, Resume } from './types';
 import useLocalStorage from './hooks/useLocalStorage';
 import { seedApplications, seedResumes } from './data/seed';
@@ -57,6 +57,9 @@ function App() {
   const [prefillApplication, setPrefillApplication] = useState<
     Partial<ApplicationFormData> | undefined
   >();
+
+  // Duplicate source state: when user clicks "Fork" on a resume card
+  const [duplicateSource, setDuplicateSource] = useState<Resume | undefined>();
 
   // Applications CRUD
   const addApplication = useCallback(
@@ -125,6 +128,20 @@ function App() {
     []
   );
 
+  // Resumes: "Fork" → open modal in ResumesTab pre-filled with parent data
+  const handleDuplicate = useCallback(
+    (id: string) => {
+      const parent = resumes.find((r) => r.id === id);
+      if (!parent) return;
+      setDuplicateSource(parent);
+      setActiveTab('resumes');
+    },
+    [resumes]
+  );
+
+  // Keep resumes memoized so useMemo in ResumesTab isn't stale
+  const resumesList = useMemo(() => resumes, [resumes]);
+
   return (
     <div className="min-h-screen bg-bg text-white">
       {/* Header */}
@@ -185,11 +202,14 @@ function App() {
         )}
         {activeTab === 'resumes' && (
           <ResumesTab
-            resumes={resumes}
+            resumes={resumesList}
             applications={applications}
             onAdd={addResume}
             onUpdate={updateResume}
             onDelete={deleteResume}
+            onDuplicate={handleDuplicate}
+            duplicateSource={duplicateSource}
+            onDuplicateHandled={() => setDuplicateSource(undefined)}
           />
         )}
       </main>

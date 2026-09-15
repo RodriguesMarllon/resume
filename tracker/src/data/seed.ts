@@ -8,6 +8,7 @@ export const seedResumes: Resume[] = [
     type: 'automation',
     lang: 'en',
     path: 'versions/2026-06-30/automation_en.pdf',
+    pdfUrl: 'https://rodriguesmarllon.github.io/resume/versions/2026-06-30/automation_en.pdf',
     keywords:
       'IEC 61850, SCADA, AVEVA, Modbus, FPSO, Petrobras, SEL, HMI, PLC, commissioning, offshore, Python, TypeScript, TagFinder, RDO, automation, OT, industrial, Siemens, Rockwell, Schneider',
     notes: 'Primary automation CV in English. Used for international roles.',
@@ -20,6 +21,7 @@ export const seedResumes: Resume[] = [
     type: 'automation',
     lang: 'pt-br',
     path: 'versions/2026-06-30/automation_ptbr.pdf',
+    pdfUrl: 'https://rodriguesmarllon.github.io/resume/versions/2026-06-30/automation_ptbr.pdf',
     keywords:
       'IEC 61850, SCADA, AVEVA, Modbus, FPSO, Petrobras, SEL, IHM, CLP, comissionamento, offshore, Python, TypeScript, TagFinder, RDO, automação, OT, industrial, Siemens, Rockwell, Schneider',
     notes: 'Versão PT-BR do CV de automação. Para vagas brasileiras.',
@@ -32,6 +34,7 @@ export const seedResumes: Resume[] = [
     type: 'it',
     lang: 'en',
     path: 'versions/2026-06-30/it-fullstack_en.pdf',
+    pdfUrl: 'https://rodriguesmarllon.github.io/resume/versions/2026-06-30/it-fullstack_en.pdf',
     keywords:
       'TypeScript, Node.js, Fastify, Express, React, Vue.js, Python, PostgreSQL, Prisma, Redis, Docker, CI/CD, GitHub Actions, REST API, multi-tenant SaaS, RBAC, ECDSA, Z-score, ETS, Cloudflare R2, Vercel, Git, Full Stack',
     notes: 'Full stack IT CV in English. For web/software roles.',
@@ -44,6 +47,7 @@ export const seedResumes: Resume[] = [
     type: 'other',
     lang: 'en',
     path: 'versions/2026-07-07/general_en.pdf',
+    pdfUrl: 'https://rodriguesmarllon.github.io/resume/versions/2026-07-07/general_en.pdf',
     keywords:
       'IEC 61850, SCADA, AVEVA, Modbus, FPSO, Petrobras, offshore, PLC, Schneider, Siemens, Rockwell, TypeScript, Node.js, Python, PostgreSQL, Docker, CI/CD, REST API, maritime, IT/OT, commissioning, TagFinder',
     notes: 'General dual-profile CV (automation + software). For LinkedIn and international applications.',
@@ -56,6 +60,9 @@ export const seedResumes: Resume[] = [
     type: 'other',
     lang: 'en',
     path: 'versions/2026-07-07/kongsberg_en.pdf',
+    pdfUrl: 'https://rodriguesmarllon.github.io/resume/versions/2026-07-07/kongsberg_en.pdf',
+    targetCompany: 'Kongsberg Maritime',
+    basedOn: 'resume-general-en',
     keywords:
       'IEC 61850, Modbus TCP, OPC, SCADA, Historian, FPSO, offshore, maritime, Bunkerchain, Port Identity, vessel, bunkering, IT/OT, industrial protocols, TypeScript, Python, PostgreSQL, REST API, data pipeline, digital ocean, Kongsberg',
     notes: 'Tailored for Kongsberg Maritime Digital Ocean role. Emphasizes maritime digital + industrial data protocols.',

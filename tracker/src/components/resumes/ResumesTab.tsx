@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Resume, Application } from '../../types';
 import { ResumeCard } from './ResumeCard';
 import { ResumeModal } from './ResumeModal';
@@ -12,6 +12,9 @@ interface ResumesTabProps {
   onAdd: (data: ResumeFormData) => void;
   onUpdate: (id: string, data: ResumeFormData) => void;
   onDelete: (id: string) => void;
+  onDuplicate: (id: string) => void;
+  duplicateSource?: Resume;
+  onDuplicateHandled?: () => void;
 }
 
 export function ResumesTab({
@@ -20,6 +23,9 @@ export function ResumesTab({
   onAdd,
   onUpdate,
   onDelete,
+  onDuplicate,
+  duplicateSource,
+  onDuplicateHandled,
 }: ResumesTabProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const [editingResume, setEditingResume] = useState<Resume | undefined>();
@@ -33,6 +39,32 @@ export function ResumesTab({
     }
     return counts;
   }, [applications]);
+
+  const parentNames = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const r of resumes) {
+      map.set(r.id, r.name);
+    }
+    return map;
+  }, [resumes]);
+
+  const sorted = useMemo(() => {
+    return [...resumes].sort((a, b) => {
+      const aBase = a.basedOn ?? a.id;
+      const bBase = b.basedOn ?? b.id;
+      if (aBase !== bBase) return aBase.localeCompare(bBase);
+      if (!a.basedOn && b.basedOn) return -1;
+      if (a.basedOn && !b.basedOn) return 1;
+      return a.createdAt.localeCompare(b.createdAt);
+    });
+  }, [resumes]);
+
+  useEffect(() => {
+    if (duplicateSource) {
+      setEditingResume(undefined);
+      setModalOpen(true);
+    }
+  }, [duplicateSource]);
 
   const handleSave = (data: ResumeFormData) => {
     if (editingResume) {
@@ -62,6 +94,12 @@ export function ResumesTab({
     setModalOpen(true);
   };
 
+  const handleClose = () => {
+    setModalOpen(false);
+    setEditingResume(undefined);
+    if (onDuplicateHandled) onDuplicateHandled();
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -79,7 +117,7 @@ export function ResumesTab({
       </div>
 
       {/* Grid */}
-      {resumes.length === 0 ? (
+      {sorted.length === 0 ? (
         <div className="text-center py-16 text-gray-600">
           <svg className="w-12 h-12 mx-auto mb-3 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -89,13 +127,15 @@ export function ResumesTab({
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {resumes.map((resume) => (
+          {sorted.map((resume) => (
             <ResumeCard
               key={resume.id}
               resume={resume}
               usageCount={usageCounts.get(resume.id) ?? 0}
               applications={applications}
               onEdit={() => openEdit(resume)}
+              onDuplicate={() => onDuplicate(resume.id)}
+              parentName={parentNames.get(resume.basedOn ?? '')}
             />
           ))}
         </div>
@@ -104,13 +144,11 @@ export function ResumesTab({
       {/* Modal */}
       <ResumeModal
         open={modalOpen}
-        onClose={() => {
-          setModalOpen(false);
-          setEditingResume(undefined);
-        }}
+        onClose={handleClose}
         onSave={handleSave}
         onDelete={editingResume ? handleDelete : undefined}
         initial={editingResume}
+        duplicateSource={editingResume ? undefined : duplicateSource}
       />
     </div>
   );

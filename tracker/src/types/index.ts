@@ -21,6 +21,9 @@ export interface Resume {
   type: 'automation' | 'it' | 'other';
   lang: 'en' | 'pt-br' | 'other';
   path?: string;
+  pdfUrl?: string;
+  targetCompany?: string;
+  basedOn?: string;
   keywords: string;
   notes?: string;
   createdAt: string;

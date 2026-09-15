@@ -11,6 +11,9 @@ const EMPTY_FORM: ResumeFormData = {
   type: 'other',
   lang: 'en',
   path: '',
+  pdfUrl: '',
+  targetCompany: '',
+  basedOn: undefined,
   keywords: '',
   notes: '',
 };
@@ -33,6 +36,7 @@ interface ResumeModalProps {
   onSave: (data: ResumeFormData) => void;
   onDelete?: () => void;
   initial?: Resume;
+  duplicateSource?: Resume;
 }
 
 interface FieldProps {
@@ -64,6 +68,7 @@ export function ResumeModal({
   onSave,
   onDelete,
   initial,
+  duplicateSource,
 }: ResumeModalProps) {
   const [form, setForm] = useState<ResumeFormData>(EMPTY_FORM);
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -73,12 +78,22 @@ export function ResumeModal({
       if (initial) {
         const { id: _id, createdAt: _createdAt, ...rest } = initial;
         setForm(rest);
+      } else if (duplicateSource) {
+        const { id: _id, createdAt: _c, ...rest } = duplicateSource;
+        setForm({
+          ...rest,
+          name: `${duplicateSource.name} — `,
+          targetCompany: '',
+          pdfUrl: '',
+          path: '',
+          basedOn: duplicateSource.id,
+        });
       } else {
         setForm(EMPTY_FORM);
       }
       setConfirmDelete(false);
     }
-  }, [open, initial]);
+  }, [open, initial, duplicateSource]);
 
   const set = <K extends keyof ResumeFormData>(field: K, value: ResumeFormData[K]) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -98,8 +113,10 @@ export function ResumeModal({
     }
   };
 
+  const modalTitle = initial ? 'Edit Resume' : duplicateSource ? `Fork: ${duplicateSource.name}` : 'Add Resume';
+
   return (
-    <Modal open={open} onClose={onClose} title={initial ? 'Edit Resume' : 'Add Resume'}>
+    <Modal open={open} onClose={onClose} title={modalTitle}>
       <form onSubmit={handleSubmit} className="space-y-4">
         <Field label="Name" required>
           <input
@@ -108,6 +125,15 @@ export function ResumeModal({
             onChange={(e) => set('name', e.target.value)}
             placeholder="e.g. Automation EN"
             required
+          />
+        </Field>
+
+        <Field label="Target Company" hint="Leave blank for base/general resumes">
+          <input
+            className={INPUT_CLS}
+            value={form.targetCompany ?? ''}
+            onChange={(e) => set('targetCompany', e.target.value)}
+            placeholder="Virtusa, Kongsberg, etc."
           />
         </Field>
 
@@ -155,6 +181,15 @@ export function ResumeModal({
             value={form.path ?? ''}
             onChange={(e) => set('path', e.target.value)}
             placeholder="versions/2026-06-30/automation_en.pdf"
+          />
+        </Field>
+
+        <Field label="PDF URL" hint="Direct link to the PDF (GitHub Pages, Drive, etc.)">
+          <input
+            className={INPUT_CLS}
+            value={form.pdfUrl ?? ''}
+            onChange={(e) => set('pdfUrl', e.target.value)}
+            placeholder="https://rodriguesmarllon.github.io/resume/versions/..."
           />
         </Field>
 
