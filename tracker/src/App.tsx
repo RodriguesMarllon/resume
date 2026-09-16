@@ -1,19 +1,92 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { Application, Resume } from './types';
-import useLocalStorage from './hooks/useLocalStorage';
+import { supabase } from './lib/supabase';
 import { seedApplications, seedResumes } from './data/seed';
 import { ApplicationsTab } from './components/applications/ApplicationsTab';
 import { ResumesTab } from './components/resumes/ResumesTab';
 import { FitAnalyzerTab } from './components/analyzer/FitAnalyzerTab';
 
 type Tab = 'applications' | 'analyzer' | 'resumes';
-
 type ApplicationFormData = Omit<Application, 'id' | 'createdAt'>;
 type ResumeFormData = Omit<Resume, 'id' | 'createdAt'>;
 
 function generateId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 }
+
+// ─── DB mappers ────────────────────────────────────────────────────────────────
+
+function dbToResume(row: Record<string, unknown>): Resume {
+  return {
+    id: row.id as string,
+    name: row.name as string,
+    title: row.title as string | undefined,
+    type: row.type as Resume['type'],
+    lang: row.lang as Resume['lang'],
+    path: row.path as string | undefined,
+    pdfUrl: row.pdf_url as string | undefined,
+    targetCompany: row.target_company as string | undefined,
+    basedOn: row.based_on as string | undefined,
+    keywords: row.keywords as string,
+    notes: row.notes as string | undefined,
+    createdAt: row.created_at as string,
+  };
+}
+
+function resumeToDb(r: Resume) {
+  return {
+    id: r.id,
+    name: r.name,
+    title: r.title ?? null,
+    type: r.type,
+    lang: r.lang,
+    path: r.path ?? null,
+    pdf_url: r.pdfUrl ?? null,
+    target_company: r.targetCompany ?? null,
+    based_on: r.basedOn ?? null,
+    keywords: r.keywords,
+    notes: r.notes ?? null,
+    created_at: r.createdAt,
+  };
+}
+
+function dbToApplication(row: Record<string, unknown>): Application {
+  return {
+    id: row.id as string,
+    role: row.role as string,
+    company: row.company as string,
+    location: row.location as string | undefined,
+    status: row.status as Application['status'],
+    date: row.date as string | undefined,
+    salary: row.salary as string | undefined,
+    resumeId: row.resume_id as string | undefined,
+    url: row.url as string | undefined,
+    keywords: row.keywords as string | undefined,
+    strengths: row.strengths as string | undefined,
+    notes: row.notes as string | undefined,
+    createdAt: row.created_at as string,
+  };
+}
+
+function applicationToDb(a: Application) {
+  return {
+    id: a.id,
+    role: a.role,
+    company: a.company,
+    location: a.location ?? null,
+    status: a.status,
+    date: a.date ?? null,
+    salary: a.salary ?? null,
+    resume_id: a.resumeId ?? null,
+    url: a.url ?? null,
+    keywords: a.keywords ?? null,
+    strengths: a.strengths ?? null,
+    notes: a.notes ?? null,
+    created_at: a.createdAt,
+  };
+}
+
+// ─── Tab config ────────────────────────────────────────────────────────────────
 
 const TAB_CONFIG: { id: Tab; label: string; icon: React.ReactNode }[] = [
   {
@@ -45,110 +118,114 @@ const TAB_CONFIG: { id: Tab; label: string; icon: React.ReactNode }[] = [
   },
 ];
 
+// ─── App ───────────────────────────────────────────────────────────────────────
+
 function App() {
   const [activeTab, setActiveTab] = useState<Tab>('applications');
-  const [applications, setApplications] = useLocalStorage<Application[]>(
-    'jt-applications',
-    seedApplications
-  );
-  const [resumes, setResumes] = useLocalStorage<Resume[]>('jt-resumes', seedResumes);
+  const [applications, setApplications] = useState<Application[]>([]);
+  const [resumes, setResumes] = useState<Resume[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Prefill state: when user clicks "Use this CV" in analyzer
-  const [prefillApplication, setPrefillApplication] = useState<
-    Partial<ApplicationFormData> | undefined
-  >();
-
-  // Duplicate source state: when user clicks "Fork" on a resume card
+  const [prefillApplication, setPrefillApplication] = useState<Partial<ApplicationFormData> | undefined>();
   const [duplicateSource, setDuplicateSource] = useState<Resume | undefined>();
 
-  // Applications CRUD
-  const addApplication = useCallback(
-    (data: ApplicationFormData) => {
-      const newApp: Application = {
-        ...data,
-        id: generateId(),
-        createdAt: new Date().toISOString(),
-      };
-      setApplications((prev) => [newApp, ...prev]);
-    },
-    [setApplications]
-  );
+  // Load from Supabase on mount; auto-seed if empty
+  useEffect(() => {
+    async function loadData() {
+      const [{ data: resumeRows }, { data: appRows }] = await Promise.all([
+        supabase.from('resumes').select('*').order('created_at', { ascending: true }),
+        supabase.from('applications').select('*').order('created_at', { ascending: false }),
+      ]);
 
-  const updateApplication = useCallback(
-    (id: string, data: ApplicationFormData) => {
-      setApplications((prev) =>
-        prev.map((a) => (a.id === id ? { ...a, ...data } : a))
-      );
-    },
-    [setApplications]
-  );
+      const dbResumes = resumeRows ?? [];
+      const dbApps = appRows ?? [];
 
-  const deleteApplication = useCallback(
-    (id: string) => {
-      setApplications((prev) => prev.filter((a) => a.id !== id));
-    },
-    [setApplications]
-  );
+      if (dbResumes.length === 0 && dbApps.length === 0) {
+        await Promise.all([
+          supabase.from('resumes').insert(seedResumes.map(resumeToDb)),
+          supabase.from('applications').insert(seedApplications.map(applicationToDb)),
+        ]);
+        setResumes(seedResumes);
+        setApplications(seedApplications);
+      } else {
+        setResumes(dbResumes.map(dbToResume));
+        setApplications(dbApps.map(dbToApplication));
+      }
 
-  // Resumes CRUD
-  const addResume = useCallback(
-    (data: ResumeFormData) => {
-      const newResume: Resume = {
-        ...data,
-        id: generateId(),
-        createdAt: new Date().toISOString(),
-      };
-      setResumes((prev) => [newResume, ...prev]);
-    },
-    [setResumes]
-  );
+      setLoading(false);
+    }
+    loadData();
+  }, []);
 
-  const updateResume = useCallback(
-    (id: string, data: ResumeFormData) => {
-      setResumes((prev) =>
-        prev.map((r) => (r.id === id ? { ...r, ...data } : r))
-      );
-    },
-    [setResumes]
-  );
+  // ─── Applications CRUD ───────────────────────────────────────────────────────
 
-  const deleteResume = useCallback(
-    (id: string) => {
-      setResumes((prev) => prev.filter((r) => r.id !== id));
-    },
-    [setResumes]
-  );
+  const addApplication = useCallback(async (data: ApplicationFormData) => {
+    const newApp: Application = { ...data, id: generateId(), createdAt: new Date().toISOString() };
+    await supabase.from('applications').insert(applicationToDb(newApp));
+    setApplications((prev) => [newApp, ...prev]);
+  }, []);
 
-  // Analyzer: "Use this CV" → switch to applications tab with prefill
-  const handleUseResume = useCallback(
-    (resumeId: string) => {
-      setPrefillApplication({ resumeId, status: 'prep' });
-      setActiveTab('applications');
-    },
-    []
-  );
+  const updateApplication = useCallback(async (id: string, data: ApplicationFormData) => {
+    await supabase.from('applications').update({
+      role: data.role, company: data.company, location: data.location ?? null,
+      status: data.status, date: data.date ?? null, salary: data.salary ?? null,
+      resume_id: data.resumeId ?? null, url: data.url ?? null,
+      keywords: data.keywords ?? null, strengths: data.strengths ?? null, notes: data.notes ?? null,
+    }).eq('id', id);
+    setApplications((prev) => prev.map((a) => (a.id === id ? { ...a, ...data } : a)));
+  }, []);
 
-  // Resumes: "Fork" → open modal in ResumesTab pre-filled with parent data
-  const handleDuplicate = useCallback(
-    (id: string) => {
-      const parent = resumes.find((r) => r.id === id);
-      if (!parent) return;
-      setDuplicateSource(parent);
-      setActiveTab('resumes');
-    },
-    [resumes]
-  );
+  const deleteApplication = useCallback(async (id: string) => {
+    await supabase.from('applications').delete().eq('id', id);
+    setApplications((prev) => prev.filter((a) => a.id !== id));
+  }, []);
 
-  // Keep resumes memoized so useMemo in ResumesTab isn't stale
+  // ─── Resumes CRUD ────────────────────────────────────────────────────────────
+
+  const addResume = useCallback(async (data: ResumeFormData) => {
+    const newResume: Resume = { ...data, id: generateId(), createdAt: new Date().toISOString() };
+    await supabase.from('resumes').insert(resumeToDb(newResume));
+    setResumes((prev) => [newResume, ...prev]);
+  }, []);
+
+  const updateResume = useCallback(async (id: string, data: ResumeFormData) => {
+    await supabase.from('resumes').update({
+      name: data.name, title: data.title ?? null, type: data.type, lang: data.lang,
+      path: data.path ?? null, pdf_url: data.pdfUrl ?? null,
+      target_company: data.targetCompany ?? null, based_on: data.basedOn ?? null,
+      keywords: data.keywords, notes: data.notes ?? null,
+    }).eq('id', id);
+    setResumes((prev) => prev.map((r) => (r.id === id ? { ...r, ...data } : r)));
+  }, []);
+
+  const deleteResume = useCallback(async (id: string) => {
+    await supabase.from('resumes').delete().eq('id', id);
+    setResumes((prev) => prev.filter((r) => r.id !== id));
+  }, []);
+
+  // ─── Analyzer / Duplicate ────────────────────────────────────────────────────
+
+  const handleUseResume = useCallback((resumeId: string) => {
+    setPrefillApplication({ resumeId, status: 'prep' });
+    setActiveTab('applications');
+  }, []);
+
+  const handleDuplicate = useCallback((id: string) => {
+    const parent = resumes.find((r) => r.id === id);
+    if (!parent) return;
+    setDuplicateSource(parent);
+    setActiveTab('resumes');
+  }, [resumes]);
+
   const resumesList = useMemo(() => resumes, [resumes]);
+
+  // ─── Render ──────────────────────────────────────────────────────────────────
 
   return (
     <div className="min-h-screen bg-bg text-white">
-      {/* Header */}
       <header className="border-b border-white/5 bg-surface/50 backdrop-blur sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-14">
-            {/* Logo / Title */}
             <div className="flex items-center gap-3">
               <div className="w-7 h-7 bg-accent rounded-lg flex items-center justify-center">
                 <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -158,7 +235,6 @@ function App() {
               <span className="font-bold text-white text-sm hidden sm:block">Job Tracker</span>
             </div>
 
-            {/* Tabs */}
             <nav className="flex items-center gap-1">
               {TAB_CONFIG.map(({ id, label, icon }) => (
                 <button
@@ -176,47 +252,52 @@ function App() {
               ))}
             </nav>
 
-            {/* Count badge */}
             <div className="text-xs text-gray-600 hidden sm:block">
-              {applications.length} application{applications.length !== 1 ? 's' : ''}
+              {loading ? '...' : `${applications.length} application${applications.length !== 1 ? 's' : ''}`}
             </div>
           </div>
         </div>
       </header>
 
-      {/* Main content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        {activeTab === 'applications' && (
-          <ApplicationsTab
-            applications={applications}
-            resumes={resumes}
-            onAdd={addApplication}
-            onUpdate={updateApplication}
-            onDelete={deleteApplication}
-            prefillApplication={prefillApplication}
-            onPrefillConsumed={() => setPrefillApplication(undefined)}
-          />
-        )}
-        {activeTab === 'analyzer' && (
-          <FitAnalyzerTab resumes={resumes} onUseResume={handleUseResume} />
-        )}
-        {activeTab === 'resumes' && (
-          <ResumesTab
-            resumes={resumesList}
-            applications={applications}
-            onAdd={addResume}
-            onUpdate={updateResume}
-            onDelete={deleteResume}
-            onDuplicate={handleDuplicate}
-            duplicateSource={duplicateSource}
-            onDuplicateHandled={() => setDuplicateSource(undefined)}
-          />
+        {loading ? (
+          <div className="flex items-center justify-center py-24 text-gray-500 text-sm">
+            Loading...
+          </div>
+        ) : (
+          <>
+            {activeTab === 'applications' && (
+              <ApplicationsTab
+                applications={applications}
+                resumes={resumes}
+                onAdd={addApplication}
+                onUpdate={updateApplication}
+                onDelete={deleteApplication}
+                prefillApplication={prefillApplication}
+                onPrefillConsumed={() => setPrefillApplication(undefined)}
+              />
+            )}
+            {activeTab === 'analyzer' && (
+              <FitAnalyzerTab resumes={resumes} onUseResume={handleUseResume} />
+            )}
+            {activeTab === 'resumes' && (
+              <ResumesTab
+                resumes={resumesList}
+                applications={applications}
+                onAdd={addResume}
+                onUpdate={updateResume}
+                onDelete={deleteResume}
+                onDuplicate={handleDuplicate}
+                duplicateSource={duplicateSource}
+                onDuplicateHandled={() => setDuplicateSource(undefined)}
+              />
+            )}
+          </>
         )}
       </main>
 
-      {/* Footer */}
       <footer className="border-t border-white/5 mt-16 py-6 text-center text-xs text-gray-700">
-        Job Tracker — Marllon Rodrigues &mdash; Data stored locally in your browser
+        Job Tracker — Marllon Rodrigues &mdash; Data synced with Supabase
       </footer>
     </div>
   );

@@ -68,6 +68,21 @@ export const seedResumes: Resume[] = [
     notes: 'Tailored for Kongsberg Maritime Digital Ocean role. Emphasizes maritime digital + industrial data protocols.',
     createdAt: '2026-07-07T00:00:00.000Z',
   },
+  {
+    id: 'resume-dotnet-en',
+    name: '.NET / Healthtech EN',
+    title: 'Software Engineer',
+    type: 'it',
+    lang: 'en',
+    path: 'versions/2026-09-16/dotnet_en.pdf',
+    pdfUrl: 'https://rodriguesmarllon.github.io/resume/versions/2026-09-16/dotnet_en.pdf',
+    targetCompany: 'Healthtech Agency (Ankit Agarwal)',
+    basedOn: 'resume-fullstack-en',
+    keywords:
+      'C#, ASP.NET Core, Entity Framework Core, SQL Server, T-SQL, SSMS, SSRS, microservices, DDD, SOLID, REST API, .NET, healthtech, predictive maintenance, Python, TypeScript, React, Vue.js, PostgreSQL, Docker, CI/CD',
+    notes: 'Tailored for .NET Developer role at healthtech agency. Highlights MAIMA C#/ASP.NET Core experience, DDD, microservices. Chronological order with full profile breadth.',
+    createdAt: '2026-09-16T00:00:00.000Z',
+  },
 ];
 
 export const seedApplications: Application[] = [
