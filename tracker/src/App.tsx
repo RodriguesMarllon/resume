@@ -125,6 +125,7 @@ function App() {
   const [applications, setApplications] = useState<Application[]>([]);
   const [resumes, setResumes] = useState<Resume[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const [prefillApplication, setPrefillApplication] = useState<Partial<ApplicationFormData> | undefined>();
   const [duplicateSource, setDuplicateSource] = useState<Resume | undefined>();
@@ -132,27 +133,35 @@ function App() {
   // Load from Supabase on mount; auto-seed if empty
   useEffect(() => {
     async function loadData() {
-      const [{ data: resumeRows }, { data: appRows }] = await Promise.all([
-        supabase.from('resumes').select('*').order('created_at', { ascending: true }),
-        supabase.from('applications').select('*').order('created_at', { ascending: false }),
-      ]);
-
-      const dbResumes = resumeRows ?? [];
-      const dbApps = appRows ?? [];
-
-      if (dbResumes.length === 0 && dbApps.length === 0) {
-        await Promise.all([
-          supabase.from('resumes').insert(seedResumes.map(resumeToDb)),
-          supabase.from('applications').insert(seedApplications.map(applicationToDb)),
+      try {
+        const [{ data: resumeRows, error: rErr }, { data: appRows, error: aErr }] = await Promise.all([
+          supabase.from('resumes').select('*').order('created_at', { ascending: true }),
+          supabase.from('applications').select('*').order('created_at', { ascending: false }),
         ]);
-        setResumes(seedResumes);
-        setApplications(seedApplications);
-      } else {
-        setResumes(dbResumes.map(dbToResume));
-        setApplications(dbApps.map(dbToApplication));
-      }
 
-      setLoading(false);
+        if (rErr) throw rErr;
+        if (aErr) throw aErr;
+
+        const dbResumes = resumeRows ?? [];
+        const dbApps = appRows ?? [];
+
+        if (dbResumes.length === 0 && dbApps.length === 0) {
+          await Promise.all([
+            supabase.from('resumes').insert(seedResumes.map(resumeToDb)),
+            supabase.from('applications').insert(seedApplications.map(applicationToDb)),
+          ]);
+          setResumes(seedResumes);
+          setApplications(seedApplications);
+        } else {
+          setResumes(dbResumes.map(dbToResume));
+          setApplications(dbApps.map(dbToApplication));
+        }
+      } catch (err) {
+        console.error('Supabase load error:', err);
+        setError(err instanceof Error ? err.message : String(err));
+      } finally {
+        setLoading(false);
+      }
     }
     loadData();
   }, []);
@@ -263,6 +272,11 @@ function App() {
         {loading ? (
           <div className="flex items-center justify-center py-24 text-gray-500 text-sm">
             Loading...
+          </div>
+        ) : error ? (
+          <div className="flex flex-col items-center justify-center py-24 gap-3 text-sm">
+            <span className="text-red-400">Failed to connect to database</span>
+            <span className="text-gray-600 font-mono text-xs">{error}</span>
           </div>
         ) : (
           <>
